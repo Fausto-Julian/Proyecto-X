@@ -3,15 +3,16 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enviroment
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Enviroment
   - Water
   - UI
-  - 
+  - Player
   - 
   - 
   - 
@@ -40,4 +41,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Enviroment
+    uniqueID: 1867341853
+    locked: 0
+  - name: Player
+    uniqueID: 3489901273
     locked: 0

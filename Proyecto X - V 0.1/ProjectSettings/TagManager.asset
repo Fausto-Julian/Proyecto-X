@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enviroment
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -12,38 +13,41 @@ TagManager:
   - Enviroment
   - Water
   - UI
+  - Enemy
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   - Player
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
   m_SortingLayers:
   - name: Default
     uniqueID: 0
     locked: 0
   - name: Enviroment
     uniqueID: 1867341853
+    locked: 0
+  - name: Enemy
+    uniqueID: 1459894655
     locked: 0
   - name: Player
     uniqueID: 3489901273

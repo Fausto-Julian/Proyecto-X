@@ -5,15 +5,17 @@ using UnityEngine;
 public class playerController : MonoBehaviour
 {
     [SerializeField] private float speed;
-    [SerializeField] private Camera cam;
 
+    [SerializeField] private Animator anim;
     [SerializeField] private Transform spawnPointAtack1;
     [SerializeField] private GameObject atack1;
+    [SerializeField] private GameObject melee;
 
     private Rigidbody2D rb;
-
     private Vector2 movement;
-    private Vector2 mousePos;
+    private float movementX;
+    private float movementY;
+
 
     void Start()
     {
@@ -25,21 +27,42 @@ public class playerController : MonoBehaviour
 
         float t = Time.deltaTime;
 
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
+        movementX = Input.GetAxisRaw("Horizontal");
+        movementY = Input.GetAxisRaw("Vertical");
+        movement = new Vector2(movementX, movementY).normalized;
 
-        mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
+        anim.SetFloat("Movement X", movementX);
+        anim.SetFloat("Movement Y", movementY);
+        anim.SetFloat("Speed", movement.sqrMagnitude);
 
-        rb.MovePosition(rb.position + movement * speed * t);
+        //transform.position += ;
 
-        Vector2 lookDir = mousePos - rb.position;
-        float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
-        rb.rotation = angle;
+
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            Instantiate(atack1, spawnPointAtack1.position, spawnPointAtack1.rotation);
+            //Instantiate(atack1, spawnPointAtack1.position, spawnPointAtack1.rotation);
+            melee.SetActive(true);
+            anim.SetBool("DownSlash", true);
+            Invoke("falseMele", 0.5f);
+            Invoke("falseDownSlash", 0.5f);
         }
     }
 
+    private void FixedUpdate()
+    {
+        float t = Time.fixedDeltaTime;
+
+        rb.MovePosition(rb.position + movement * speed * t);
+    }
+
+    private void falseDownSlash()
+    {
+        anim.SetBool("DownSlash", false);
+    }
+
+    private void falseMele()
+    {
+        melee.SetActive(false);
+    }
 }

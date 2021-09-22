@@ -12,11 +12,13 @@ public class atack1Script : MonoBehaviour
 
     void Update()
     {
+        /*
         currentTime += Time.deltaTime;
         if (currentTime >= timeLifeBullet)
         {
             Destroy(gameObject);
         }
+        */
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

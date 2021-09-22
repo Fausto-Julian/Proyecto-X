@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - Chest
   - Diamond
+  - CombatArea
+  - PlayerSword
   layers:
   - Default
   - TransparentFX

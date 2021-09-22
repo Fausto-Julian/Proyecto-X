@@ -6,13 +6,37 @@ public class itemCollect : MonoBehaviour
 {
 
     [SerializeField] private ParticleSystem particleSys;
+    [SerializeField] private AudioSource sound;
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private bool OnCollect = false;
+
+    private void Update()
     {
-        if (collision.CompareTag("Player") && Input.GetKeyDown(KeyCode.F))
+        if (OnCollect && Input.GetKeyDown(KeyCode.F))
         {
-            particleSys.Play();
-            Destroy(gameObject);
+            sound.Play();
+            Invoke("destroyGameObject", 0.5f);
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            OnCollect = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            OnCollect = false;
+        }
+    }
+
+    private void destroyGameObject()
+    {
+        Destroy(gameObject);
     }
 }

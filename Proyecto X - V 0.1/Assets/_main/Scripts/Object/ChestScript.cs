@@ -5,6 +5,7 @@ using UnityEngine;
 public class ChestScript : MonoBehaviour
 {
     [SerializeField] private ParticleSystem particleSys;
+    [SerializeField] private GameObject diamond;
 
     private Animator anim;
 
@@ -26,6 +27,7 @@ public class ChestScript : MonoBehaviour
             {
                 particleSys.Play();
                 anim.SetTrigger("Open");
+                diamond.SetActive(true);
                 leaveOpen = true;
             }
         }

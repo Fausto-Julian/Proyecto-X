@@ -2,18 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class meleeScript : MonoBehaviour
+public class MeleeScript : MonoBehaviour
 {
-    [SerializeField] private float damage = 10f;
-    [SerializeField] private GameObject diamond;
+    [SerializeField] private int damage;
 
+    private HealthController healthController;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
-        if (collision.tag == "Enemy")
+        if (collision.gameObject.CompareTag("Enemy"))
         {
-            Instantiate(diamond, collision.transform.position, collision.transform.rotation);
-            Destroy(collision.gameObject);
+            healthController = collision.GetComponent<HealthController>();
+
+            if (healthController != null)
+            {
+                healthController.GetDamage(damage);
+            }
         }
     }
 }

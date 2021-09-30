@@ -2,15 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class atack1Script : MonoBehaviour
+public class Atack1Script : MonoBehaviour
 {
     [SerializeField] private float timeLifeBullet = 1f;
-    [SerializeField] private float damage = 10f;
+    [SerializeField] private int damage;
     [SerializeField] private float speed = 5f;
     [SerializeField] private GameObject diamond;
 
     private float currentTime;
 
+    private HealthController healthController;
 
     void Update()
     {
@@ -27,12 +28,14 @@ public class atack1Script : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
-        if (collision.tag == "Enemy")
+        if (collision.gameObject.CompareTag("Enemy"))
         {
-            Instantiate(diamond, collision.transform.position, collision.transform.rotation);
-            Destroy(collision.gameObject);
-            Destroy(gameObject);
+            healthController = collision.GetComponent<HealthController>();
+
+            if (healthController != null)
+            {
+                healthController.GetDamage(damage);
+            }
         }
     }
 }

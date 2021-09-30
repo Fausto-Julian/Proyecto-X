@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class musicController : MonoBehaviour
+public class MusicController : MonoBehaviour
 {
     [SerializeField] private AudioSource music;
     private AudioSource musicCombat;

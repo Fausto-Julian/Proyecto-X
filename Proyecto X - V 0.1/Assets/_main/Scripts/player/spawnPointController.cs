@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class spawnPointController : MonoBehaviour
+public class SpawnPointController : MonoBehaviour
 {
     [SerializeField] private Camera cam;
     private Vector2 mousePos;

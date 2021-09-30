@@ -17,12 +17,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioClip espada = null;
     private AudioSource aS;
 
-
     private Rigidbody2D rb;
     private Vector2 movement;
     private float movementX;
     private float movementY;
-
 
     private HealthController healthController;
 

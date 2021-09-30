@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enviroment
+  - Enemy
+  - Chest
+  - Diamond
+  - CombatArea
+  - PlayerSword
   layers:
   - Default
   - TransparentFX
@@ -12,38 +17,47 @@ TagManager:
   - Enviroment
   - Water
   - UI
+  - 
+  - 
+  - 
+  - 
+  - Items
+  - 
+  - 
+  - 
+  - 
+  - Object
+  - 
+  - 
+  - 
+  - 
+  - Enemy
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   - Player
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
   m_SortingLayers:
   - name: Default
     uniqueID: 0
     locked: 0
   - name: Enviroment
     uniqueID: 1867341853
+    locked: 0
+  - name: Items
+    uniqueID: 418191915
+    locked: 0
+  - name: Object
+    uniqueID: 457994685
+    locked: 0
+  - name: Enemy
+    uniqueID: 1459894655
     locked: 0
   - name: Player
     uniqueID: 3489901273

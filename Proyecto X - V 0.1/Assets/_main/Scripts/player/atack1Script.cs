@@ -35,7 +35,6 @@ public class Atack1Script : MonoBehaviour
             if (healthController != null)
             {
                 healthController.GetDamage(damage);
-                Destroy(gameObject);
             }
         }
     }

@@ -33,6 +33,12 @@ public class MoveControllerScript : MonoBehaviour
     
     private void Update()
     {
+        if (healthController.IsAlive() == false)
+        {
+            Instantiate(diamond, transform.position, transform.rotation);
+            Destroy(gameObject);
+        }
+
         var distance = Vector2.Distance(transform.position, playerTransform.position);
 
         if(distance <= radius)
@@ -54,10 +60,5 @@ public class MoveControllerScript : MonoBehaviour
             anim.SetBool("Move", false);
         }
 
-        if (healthController.IsAlive() == false)
-        {
-            Instantiate(diamond, transform.position, transform.rotation);
-            Destroy(gameObject);
-        }
     }
 }

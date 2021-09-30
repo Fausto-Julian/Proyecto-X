@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class playerController : MonoBehaviour
+[RequireComponent(typeof(HealthController))]
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(AudioSource))]
+public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float speed;
 
@@ -21,14 +24,22 @@ public class playerController : MonoBehaviour
     private float movementY;
 
 
-    void Start()
+    private HealthController healthController;
+
+    private void Awake()
     {
+        healthController = GetComponent<HealthController>();
         rb = GetComponent<Rigidbody2D>();
         aS = GetComponent<AudioSource>();
     }
 
     private void Update()
     {
+
+        if (healthController.IsAlive() == false)
+        {
+            Destroy(gameObject);
+        }
 
         float t = Time.deltaTime;
 

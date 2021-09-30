@@ -15,7 +15,7 @@ public class itemCollect : MonoBehaviour
         if (OnCollect && Input.GetKeyDown(KeyCode.F))
         {
             sound.Play();
-            Invoke("destroyGameObject", 0.5f);
+            Invoke("destroyGameObject", 0.175f);
         }
     }
 

@@ -32,6 +32,7 @@ public class atack1Script : MonoBehaviour
         {
             Instantiate(diamond, collision.transform.position, collision.transform.rotation);
             Destroy(collision.gameObject);
+            Destroy(gameObject);
         }
     }
 }

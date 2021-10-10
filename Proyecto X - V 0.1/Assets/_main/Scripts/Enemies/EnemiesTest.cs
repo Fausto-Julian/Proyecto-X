@@ -8,15 +8,24 @@ public class EnemiesTest : MonoBehaviour
     [SerializeField] private GameObject diamond;
     private HealthController healthController;
 
-    void Start()
+    private LevelManager levelManager;
+
+    private void Awake()
     {
         healthController = GetComponent<HealthController>();
+        levelManager = FindObjectOfType<LevelManager>();
     }
 
-    void Update()
+    private void Start()
+    {
+        healthController.SetDefaultHealth();
+    }
+
+    private void Update()
     {
         if (healthController.IsAlive() == false)
         {
+            levelManager.RestEnemies();
             Instantiate(diamond, transform.position, transform.rotation);
             Destroy(gameObject);
         }

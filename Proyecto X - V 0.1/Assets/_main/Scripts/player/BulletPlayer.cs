@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Atack1Script : MonoBehaviour
+public class BulletPlayer : MonoBehaviour
 {
     [SerializeField] private float timeLifeBullet = 1f;
     [SerializeField] private int damage;
@@ -38,5 +38,8 @@ public class Atack1Script : MonoBehaviour
                 Destroy(gameObject);
             }
         }
+
+        if (collision.gameObject.CompareTag("Wall")) 
+            Destroy(gameObject);
     }
 }

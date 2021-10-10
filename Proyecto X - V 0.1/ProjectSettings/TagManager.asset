@@ -10,6 +10,9 @@ TagManager:
   - Diamond
   - CombatArea
   - PlayerSword
+  - GameManager
+  - Wall
+  - WinZone
   layers:
   - Default
   - TransparentFX

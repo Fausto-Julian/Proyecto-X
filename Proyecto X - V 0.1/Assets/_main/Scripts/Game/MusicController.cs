@@ -28,7 +28,6 @@ public class MusicController : MonoBehaviour
         
         if (collision.CompareTag("Player"))
         {
-            Debug.Log("sali");
             music.Play();
             musicCombat.Stop();
         }

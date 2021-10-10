@@ -5,13 +5,18 @@ using UnityEngine;
 public class HealthController : MonoBehaviour
 {
     [SerializeField] private int maxHealth;
+    [SerializeField] private int currentHealth;
 
-    [SerializeField]private int currentHealth;
-
-
-    private void Awake()
+    public void SetHealth(int health)
     {
-        currentHealth = maxHealth;
+        if (health > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+        else
+        {
+            currentHealth = health;
+        }
     }
 
     public void GetDamage(int damage)
@@ -31,10 +36,15 @@ public class HealthController : MonoBehaviour
 
     public int GetCurrentHealth()
     {
+        if (currentHealth < 0)
+        {
+            currentHealth = 0;
+        }
+
         return currentHealth;
     }
 
-    public void ResetHealth()
+    public void SetDefaultHealth()
     {
         currentHealth = maxHealth;
     }

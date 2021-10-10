@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeLifeBullet: 2
   damage: 20
-  speed: 5
+  speed: 10
   diamond: {fileID: 9132900415335629046, guid: 9deb5260718ad8f4880ad56c1e6eea44, type: 3}
 --- !u!212 &358271763400835589
 SpriteRenderer:

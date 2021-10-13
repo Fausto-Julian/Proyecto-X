@@ -21,6 +21,8 @@ public class PauseGameManager : MonoBehaviour
 
     private void Awake()
     {
+        isGameRuning = true;
+
         if (inst == null)
         {
             inst = this;

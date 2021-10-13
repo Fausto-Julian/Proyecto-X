@@ -25,7 +25,6 @@ public class PlayerController : MonoBehaviour
     private float movementY;
 
     private HealthController healthController;
-    //private PauseGameManager pauseGameManager;
 
     private void Awake()
     {
@@ -48,9 +47,9 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        // Solucionar no se mueve
         if (PauseGameManager.inst.IsGameRuning())
         {
-
             SaveLife();
 
             float t = Time.deltaTime;
@@ -82,7 +81,6 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         float t = Time.fixedDeltaTime;
-
         rb.MovePosition(rb.position + movement * speed * t);
     }
 

@@ -11,17 +11,11 @@ public class ItemCollect : MonoBehaviour
     [SerializeField] private AudioSource sound;
 
     private bool OnCollect = false;
-    //private GameManager gameManager;
-    private void Awake()
-    {
-        //gameManager = FindObjectOfType<GameManager>();
-    }
 
     private void Update()
     {
         if (OnCollect && Input.GetKeyDown(KeyCode.F))
         {
-            //gameManager.OnCollectionDiamondHandler(value);
             GameManager.inst.OnCollectionDiamondHandler(value);
             sound.Play();
             Invoke("destroyGameObject", 0.175f);

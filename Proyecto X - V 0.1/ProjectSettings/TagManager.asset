@@ -13,6 +13,7 @@ TagManager:
   - GameManager
   - Wall
   - WinZone
+  - Door
   layers:
   - Default
   - TransparentFX

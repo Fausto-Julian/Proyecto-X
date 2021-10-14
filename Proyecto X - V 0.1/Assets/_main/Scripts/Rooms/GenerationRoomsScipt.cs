@@ -24,6 +24,7 @@ public class GenerationRoomsScipt : MonoBehaviour
             currentRooms = currentRooms + 2;
         }
     }
+
     private void GeneratorUp()
     {
         generateUp = Random.value > 0.5;
@@ -46,6 +47,7 @@ public class GenerationRoomsScipt : MonoBehaviour
         var i = Random.Range(0, rooms.Length);
         Instantiate(rooms[i], pos1, transform.rotation);
     }
+
     private void GeneratorDown()
     {
         generateUp = Random.value > 0.5;

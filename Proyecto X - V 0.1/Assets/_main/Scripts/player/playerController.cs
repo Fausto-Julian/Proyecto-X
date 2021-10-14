@@ -47,60 +47,46 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        // Solucionar no se mueve
         if (PauseGameManager.inst.IsGameRuning())
         {
             SaveLife();
 
-            float t = Time.deltaTime;
-            movementX = Input.GetAxisRaw("Horizontal");
-            movementY = Input.GetAxisRaw("Vertical");
-            movement = new Vector2(movementX, movementY).normalized;
-
             SetAnimations();
 
-            if (Input.GetKeyDown(KeyCode.Mouse0))
-            {
-                melee.SetActive(true);
-                anim.SetBool("DownSlash", true);
-                aS.clip = espada;
-                aS.Play();
-                Invoke("falseMele", 0.5f);
-                Invoke("falseDownSlash", 0.5f);
-            }
-
-            if (Input.GetKeyDown(KeyCode.Mouse1))
-            {
-                Instantiate(bulletFire, spawnPointAtack1.position, spawnPointAtack1.rotation);
-                anim.SetBool("DownCast", true);
-                Invoke("falseDownCast", 0.5f);
-            }
+            InputManager();
         }
     }
 
     private void FixedUpdate()
     {
-        float t = Time.fixedDeltaTime;
-        rb.MovePosition(rb.position + movement * speed * t);
+        if (PauseGameManager.inst.IsGameRuning())
+        {
+            movementX = Input.GetAxisRaw("Horizontal");
+            movementY = Input.GetAxisRaw("Vertical");
+            movement = new Vector2(movementX, movementY).normalized;
+
+            rb.velocity = movement * speed;
+        }
     }
 
-    private void falseDownSlash()
+    private void InputManager()
     {
-        anim.SetBool("DownSlash", false);
-    }
-    private void falseDownCast()
-    {
-        anim.SetBool("DownCast", false);
-    }
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            melee.SetActive(true);
+            anim.SetBool("DownSlash", true);
+            aS.clip = espada;
+            aS.Play();
+            Invoke("falseMele", 0.5f);
+            Invoke("falseDownSlash", 0.5f);
+        }
 
-    private void falseMele()
-    {
-        melee.SetActive(false);
-    }
-
-    private void SaveLife()
-    {
-        GameManager.inst.SetPlayerCurrentLife(healthController.GetCurrentHealth());
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            Instantiate(bulletFire, spawnPointAtack1.position, spawnPointAtack1.rotation);
+            anim.SetBool("DownCast", true);
+            Invoke("falseDownCast", 0.5f);
+        }
     }
 
     private void SetAnimations()
@@ -151,4 +137,23 @@ public class PlayerController : MonoBehaviour
             anim.SetFloat("RotateY", 0f);
         }
     }
+
+    private void falseDownSlash()
+    {
+        anim.SetBool("DownSlash", false);
+    }
+    private void falseDownCast()
+    {
+        anim.SetBool("DownCast", false);
+    }
+    private void falseMele()
+    {
+        melee.SetActive(false);
+    }
+
+    private void SaveLife()
+    {
+        GameManager.inst.SetPlayerCurrentLife(healthController.GetCurrentHealth());
+    }
+
 }

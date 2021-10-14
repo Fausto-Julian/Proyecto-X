@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class DamagePlayerScript : MonoBehaviour
 {
-    [SerializeField] private int damage;
+    //[SerializeField] private int damage;
 
-    private HealthController healthController;
+    //private HealthController healthController;
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            healthController = collision.GetComponent<HealthController>();
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Player"))
+    //    {
+    //        healthController = collision.GetComponent<HealthController>();
 
-            if (healthController != null)
-            {
-                healthController.GetDamage(damage);
-            }
-        }
-    }
+    //        if (healthController != null)
+    //        {
+    //            healthController.GetDamage(damage);
+    //        }
+    //    }
+    //}
 }

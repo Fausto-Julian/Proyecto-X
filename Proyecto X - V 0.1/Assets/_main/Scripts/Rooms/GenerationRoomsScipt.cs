@@ -5,14 +5,18 @@ using UnityEngine;
 public class GenerationRoomsScipt : MonoBehaviour
 {
     [SerializeField] private GameObject[] rooms;
+    [SerializeField] private GameObject roomFinal, roomBoos;
 
     private Vector2 pos1;
     private Vector2 pos2;
 
+    [SerializeField] private bool levelBoos;
     private bool generateUp = true;
     private bool generateSides = true;
+    private bool levelBoosLastRoom = false;
+    private bool levelLastRoom = false;
 
-    private int maxRooms = 10;
+    [SerializeField] private int maxRooms;
     private int currentRooms = 0;
 
     private void Update()
@@ -22,6 +26,21 @@ public class GenerationRoomsScipt : MonoBehaviour
             GeneratorUp();
             GeneratorDown();
             currentRooms = currentRooms + 2;
+
+            if (levelBoos)
+            {
+                if (currentRooms >= maxRooms - 1)
+                {
+                    levelBoosLastRoom = true;
+                }
+            }
+            else
+            {
+                if (currentRooms >= maxRooms - 1)
+                {
+                    levelLastRoom = true;
+                }
+            }
         }
     }
 
@@ -43,9 +62,15 @@ public class GenerationRoomsScipt : MonoBehaviour
             generateSides = false;
             generateUp = true;
         }
-
-        var i = Random.Range(0, rooms.Length);
-        Instantiate(rooms[i], pos1, transform.rotation);
+        if (levelBoosLastRoom)
+        {
+            Instantiate(roomBoos, pos1, transform.rotation);
+        }
+        else
+        {
+            var i = Random.Range(0, rooms.Length);
+            Instantiate(rooms[i], pos1, transform.rotation);
+        }
     }
 
     private void GeneratorDown()
@@ -67,7 +92,14 @@ public class GenerationRoomsScipt : MonoBehaviour
             generateUp = true;
         }
 
-        var i = Random.Range(0, rooms.Length);
-        Instantiate(rooms[i], pos2, transform.rotation);
+        if (levelBoosLastRoom || levelLastRoom)
+        {
+            Instantiate(roomFinal, pos2, transform.rotation);
+        }
+        else
+        {
+            var i = Random.Range(0, rooms.Length);
+            Instantiate(rooms[i], pos2, transform.rotation);
+        }
     }
 }

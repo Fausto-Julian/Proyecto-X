@@ -35,7 +35,7 @@ public class SlimeControllerScript : MonoBehaviour
     
     private void Update()
     {
-        if (PauseGameManager.inst.IsGameRuning())
+        if (PauseGameManager.inst.CheckIsGameRunning())
         {
             if (healthController.IsAlive() == false)
             {

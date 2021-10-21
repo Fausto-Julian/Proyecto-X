@@ -16,12 +16,12 @@ public class PauseGameManager : MonoBehaviour
     [SerializeField] private Button noExit;
     [SerializeField] private Button exitGame;
 
-    private bool isGameRuning = true;
+    private bool isGameRunning = true;
     private bool stayMenu = false;
 
     private void Awake()
     {
-        isGameRuning = true;
+        isGameRunning = true;
 
         if (inst == null)
         {
@@ -44,11 +44,11 @@ public class PauseGameManager : MonoBehaviour
     {
         if (stayMenu != true)
         {
-            if (isGameRuning)
+            if (isGameRunning)
             {
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
-                    isGameRuning = false;
+                    isGameRunning = false;
                     /*
                     AudioSource[] audios = FindObjectsOfType<AudioSource>();
                     foreach (AudioSource a in audios)
@@ -72,7 +72,7 @@ public class PauseGameManager : MonoBehaviour
 
     private void ContinueGame()
     {
-        isGameRuning = true;
+        isGameRunning = true;
         Time.timeScale = 1;
         panelPause.SetActive(false);
     }
@@ -103,8 +103,21 @@ public class PauseGameManager : MonoBehaviour
         Application.Quit();
     }
 
-    public bool IsGameRuning()
+    public void IsGamePause()
     {
-        return isGameRuning;
+        isGameRunning = false;
+        Time.timeScale = 0;
     }
+
+    public void IsGameRunning()
+    {
+        isGameRunning = true;
+        Time.timeScale = 1;
+    }
+
+    public bool CheckIsGameRunning()
+    {
+        return isGameRunning;
+    }
+
 }

@@ -5,16 +5,24 @@ using UnityEngine;
 public class DoorManagerScript : MonoBehaviour
 {
     [SerializeField] private Sprite[] spriteDoor;
-
     [SerializeField] private int DoorUpDown;
     [SerializeField] private int DoorRightLeft;
     [SerializeField] private bool openDoor;
 
-    private SpriteRenderer spriteRenderer;
+    [SerializeField] private GameObject roomBossText;
 
+    private SpriteRenderer spriteRenderer;
     private Camera cam;
 
     private GameObject otherRoom;
+    private GameObject otherDoorIsBoss;
+
+    private bool firstDoorBoss = false;
+    private float time = 0;
+
+    private RoomManager otherRoomManager;
+
+    [SerializeField] PlayerController playerController;
 
     private void Awake()
     {
@@ -38,15 +46,39 @@ public class DoorManagerScript : MonoBehaviour
     {
         if (collision.CompareTag("Door"))
         {
-            otherRoom = collision.transform.parent.transform.parent.gameObject;
+            otherRoomManager = collision.transform.parent.transform.parent.gameObject.GetComponent<RoomManager>();
+            otherRoom = collision.transform.parent.transform.parent.transform.parent.gameObject;
+        }
+
+        if (collision.CompareTag("DoorBoss"))
+        {
+            otherRoomManager = collision.transform.parent.transform.parent.gameObject.GetComponent<RoomManager>();
+            otherRoom = collision.transform.parent.transform.parent.transform.parent.gameObject;
+            otherDoorIsBoss = collision.gameObject;
         }
 
         if (openDoor == true)
         {
             if (collision.CompareTag("Player"))
             {
-                collision.transform.position = new Vector2(transform.position.x + 3f * DoorRightLeft, transform.position.y + 3f * DoorUpDown);
-                cam.transform.position = new Vector3(otherRoom.transform.position.x, otherRoom.transform.position.y, -10);
+                if (otherDoorIsBoss != null && !firstDoorBoss)
+                {
+                    roomBossText.SetActive(true);
+
+                    playerController = collision.GetComponent<PlayerController>();
+                    playerController.PausePlayer();
+
+                    collision.transform.position = new Vector2(transform.position.x + 3.5f * DoorRightLeft, transform.position.y + 3.5f * DoorUpDown);
+                    cam.transform.position = new Vector3(otherRoom.transform.position.x, otherRoom.transform.position.y, -10);
+
+                    Invoke("ActiveRoomBoss", 5f);
+                }
+                else
+                {
+                    otherRoomManager.GetComponent<RoomManager>().ActiveEnemys();
+                    collision.transform.position = new Vector2(transform.position.x + 3.5f * DoorRightLeft, transform.position.y + 3.5f * DoorUpDown);
+                    cam.transform.position = new Vector3(otherRoom.transform.position.x, otherRoom.transform.position.y, -10);
+                }
             }
         }
 
@@ -71,4 +103,12 @@ public class DoorManagerScript : MonoBehaviour
     {
         openDoor = false;
     }
+
+    private void ActiveRoomBoss()
+    {
+        roomBossText.SetActive(false);
+        playerController.ResumePlayer();
+        otherRoomManager.GetComponent<RoomManager>().ActiveEnemys();
+    }
+
 }

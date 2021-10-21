@@ -9,6 +9,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float speed;
+    [SerializeField] private float aceleracionMax;
 
     [SerializeField] private Animator anim;
     [SerializeField] private Transform center;
@@ -25,6 +26,8 @@ public class PlayerController : MonoBehaviour
     private float movementY;
 
     private HealthController healthController;
+
+    private bool pausePlayer= false;
 
     private void Awake()
     {
@@ -47,30 +50,45 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (PauseGameManager.inst.IsGameRuning())
+        if (PauseGameManager.inst.CheckIsGameRunning() && pausePlayer != true)
         {
             SaveLife();
 
             SetAnimations();
 
-            InputManager();
+           InputManager();
         }
+    }
+
+    public void PausePlayer()
+    {
+        pausePlayer = true;
+    }
+    public void ResumePlayer()
+    {
+        pausePlayer = false;
     }
 
     private void FixedUpdate()
     {
-        if (PauseGameManager.inst.IsGameRuning())
+        if (PauseGameManager.inst.CheckIsGameRunning())
         {
-            movementX = Input.GetAxisRaw("Horizontal");
-            movementY = Input.GetAxisRaw("Vertical");
-            movement = new Vector2(movementX, movementY).normalized;
+            var desiredSpeed = movement * speed;
+            var difVel = desiredSpeed - rb.velocity;
+            difVel.x = Mathf.Clamp(difVel.x, -aceleracionMax, aceleracionMax);
+            difVel.y = Mathf.Clamp(difVel.y, -aceleracionMax, aceleracionMax);
+            var force = rb.mass * difVel;
 
-            rb.velocity = movement * speed;
+            rb.AddForce(force, ForceMode2D.Impulse);
         }
     }
 
     private void InputManager()
     {
+        movementX = Input.GetAxisRaw("Horizontal");
+        movementY = Input.GetAxisRaw("Vertical");
+        movement = new Vector2(movementX, movementY);
+
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             melee.SetActive(true);
@@ -86,6 +104,11 @@ public class PlayerController : MonoBehaviour
             Instantiate(bulletFire, spawnPointAtack1.position, spawnPointAtack1.rotation);
             anim.SetBool("DownCast", true);
             Invoke("falseDownCast", 0.5f);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            SkillTreeManager.inst.ActivePanel();
         }
     }
 
@@ -156,4 +179,8 @@ public class PlayerController : MonoBehaviour
         GameManager.inst.SetPlayerCurrentLife(healthController.GetCurrentHealth());
     }
 
+    private void OnMouseOver()
+    {
+        Debug.Log("hola");
+    }
 }

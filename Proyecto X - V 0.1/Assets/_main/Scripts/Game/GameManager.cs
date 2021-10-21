@@ -60,13 +60,23 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void OnCollectionDiamondHandler(int diamond)
+    public void OnCollectionDiamondHandler(int diamondCount)
     {
-        diamondPoints += diamond;
+        diamondPoints += diamondCount;
     }
 
     public void NextLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public int CheckDiamondPoint()
+    {
+        return diamondPoints;
+    }
+
+    public void subtractDiamond(int count)
+    {
+        diamondPoints -= count;
     }
 }

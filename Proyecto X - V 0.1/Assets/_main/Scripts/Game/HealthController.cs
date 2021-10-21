@@ -6,7 +6,7 @@ public class HealthController : MonoBehaviour
 {
     [SerializeField] private int maxHealth;
     [SerializeField] private int currentHealth;
-
+    
     public void SetHealth(int health)
     {
         if (health > maxHealth)

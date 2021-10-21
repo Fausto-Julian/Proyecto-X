@@ -5,25 +5,31 @@ using UnityEngine;
 public class BulletPlayer : MonoBehaviour
 {
     [SerializeField] private float timeLifeBullet = 1f;
-    [SerializeField] private int damage;
+    [SerializeField] private int damageDefault;
     [SerializeField] private float speed = 5f;
     [SerializeField] private GameObject diamond;
 
-    private float currentTime;
-
     private HealthController healthController;
+
+    private Rigidbody2D rb;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
 
     void Update()
     {
-        float t = Time.deltaTime;
+        Destroy(gameObject, timeLifeBullet);
+    }
 
-        currentTime += Time.deltaTime;
-        if (currentTime >= timeLifeBullet)
-        {
-            Destroy(gameObject);
-        }
+    private void FixedUpdate()
+    {
+        var desiredSpeed = transform.right * speed;
+        var difVel = new Vector2(desiredSpeed.x - rb.velocity.x, desiredSpeed.y - rb.velocity.y);
+        var force = rb.mass * difVel;
 
-        transform.position += transform.up * speed * Time.deltaTime;
+        rb.AddForce(force, ForceMode2D.Impulse);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -34,6 +40,9 @@ public class BulletPlayer : MonoBehaviour
 
             if (healthController != null)
             {
+                var damage = damageDefault + SkillTreeManager.inst.LevelFire();
+                Debug.Log(SkillTreeManager.inst.LevelFire());
+                Debug.Log(damage);
                 healthController.GetDamage(damage);
                 Destroy(gameObject);
             }
@@ -41,5 +50,10 @@ public class BulletPlayer : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Wall")) 
             Destroy(gameObject);
+    }
+
+    public int DamageDefaultFire()
+    {
+        return damageDefault;
     }
 }

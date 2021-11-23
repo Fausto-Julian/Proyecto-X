@@ -105,6 +105,9 @@ public class SkillTreeManager : MonoBehaviour
         buttonLevelFire2.onClick.AddListener(UpGradeFireHandler);
         buttonLevelFire3.onClick.AddListener(UpGradeFireHandler);
         buttonLevelFire4.onClick.AddListener(UpGradeFireHandler);
+        buttonLevelFire2.interactable = false;
+        buttonLevelFire3.interactable = false;
+        buttonLevelFire4.interactable = false;
         #endregion
 
         #region LevelUp Water
@@ -140,7 +143,11 @@ public class SkillTreeManager : MonoBehaviour
                 if (costDiamondLevelFire1 <= GameManager.inst.GetDiamondPoint())
                 {
                     levelDamageFire += defaultDamageFire * 10 / 100;
+                    var colors = buttonLevelFire1.colors;
+                    colors.disabledColor = Color.blue;
+                    buttonLevelFire1.colors = colors;
                     buttonLevelFire1.interactable = false;
+                    buttonLevelFire2.interactable = true;
                     GameManager.inst.subtractDiamond(costDiamondLevelFire1);
                 }
                 else
@@ -154,6 +161,7 @@ public class SkillTreeManager : MonoBehaviour
                 {
                     levelDamageFire += defaultDamageFire * 20 / 100;
                     buttonLevelFire2.interactable = false;
+                    buttonLevelFire3.interactable = true;
                     GameManager.inst.subtractDiamond(costDiamondLevelFire2);
                 }
                 else
@@ -167,6 +175,7 @@ public class SkillTreeManager : MonoBehaviour
                 {
                     levelDamageFire += defaultDamageFire * 30 / 100;
                     buttonLevelFire3.interactable = false;
+                    buttonLevelFire4.interactable = true;
                     GameManager.inst.subtractDiamond(costDiamondLevelFire3);
                 }
                 else

@@ -25,7 +25,7 @@ public class HudManager : MonoBehaviour
         }
 
         _gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-        _gameManager.diamondAction += DiamondChangeHandler;
+        _gameManager.OnChangeDiamond += DiamondChangeHandler;
     }
 
     private void Start()
@@ -37,8 +37,6 @@ public class HudManager : MonoBehaviour
         float health = currentHealth / maxHealth;
 
         lifeBar.fillAmount = health;
-
-        diamondCountText.text = GameManager.inst.GetDiamondPoint().ToString();
     }
 
     private void Update()
@@ -53,6 +51,12 @@ public class HudManager : MonoBehaviour
     private void DiamondChangeHandler(int diamond)
     {
         diamondCountText.text = diamond.ToString();
+    }
+
+    public void LoadHud(int diamondCount, float currentHealth)
+    {
+        diamondCountText.text = diamondCount.ToString();
+        lifeBar.fillAmount = currentHealth / _playerHealthController.GetDefaultHealth();
     }
 
     public void DeletedManagerHandler()

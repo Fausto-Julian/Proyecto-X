@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
         _audioSouce = GetComponent<AudioSource>();
         _healthController = GetComponent<HealthController>();
 
-        _healthController.isDeath += IsDeathHandler;
+        _healthController.OnDeath += IsDeathHandler;
     }
     private void Start()
     {
@@ -171,7 +171,7 @@ public class PlayerController : MonoBehaviour
 
     private void IsDeathHandler()
     {
-       _healthController.isDeath -= IsDeathHandler;
+       _healthController.OnDeath -= IsDeathHandler;
         Destroy(gameObject);
         Debug.Log("Moriste");
     }
@@ -187,11 +187,5 @@ public class PlayerController : MonoBehaviour
     private void falseMele()
     {
         melee.SetActive(false);
-    }
-
-    // skilltree
-    private void OnMouseOver()
-    {
-        Debug.Log("hola");
     }
 }

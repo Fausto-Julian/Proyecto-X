@@ -17,7 +17,6 @@ public class PauseGameManager : MonoBehaviour
     [SerializeField] private Button exitGame;
 
     private bool _isGameRunning = true;
-    private bool _stayMenu = false;
 
 
     private void Awake()
@@ -43,30 +42,27 @@ public class PauseGameManager : MonoBehaviour
 
     private void Update()
     {
-        if (_stayMenu != true)
+        if (_isGameRunning)
         {
-            if (_isGameRunning)
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
-                if (Input.GetKeyDown(KeyCode.Escape))
+                _isGameRunning = false;
+                /*
+                AudioSource[] audios = FindObjectsOfType<AudioSource>();
+                foreach (AudioSource a in audios)
                 {
-                    _isGameRunning = false;
-                    /*
-                    AudioSource[] audios = FindObjectsOfType<AudioSource>();
-                    foreach (AudioSource a in audios)
-                    {
-                        a.Pause();
-                    }
-                    */
-                    panelPause.SetActive(true);
-                    Time.timeScale = 0;
+                    a.Pause();
                 }
+                */
+                panelPause.SetActive(true);
+                Time.timeScale = 0;
             }
-            else
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
-                if (Input.GetKeyDown(KeyCode.Escape))
-                {
-                    ContinueGame();
-                }
+                ContinueGame();
             }
         }
     }

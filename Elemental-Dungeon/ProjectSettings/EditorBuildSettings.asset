@@ -44,4 +44,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_main/Scenes/WinScene.unity
     guid: 0ff69e32b0481cc449d8f547ab66e76c
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 22ba1dfe774d540488f5d7bc801626f9, type: 2}
+    com.unity.localization.settings: {fileID: 11400000, guid: f619ba4b5e61e2f4a86c12b6313f09a6, type: 2}

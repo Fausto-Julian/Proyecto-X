@@ -29,12 +29,12 @@ public class SlimeControllerScript : MonoBehaviour
     private void Start()
     {
         _healthController.SetDefaultHealth();
-        _healthController.isDeath += IsDeathHandler;
+        _healthController.OnDeath += IsDeathHandler;
     }
 
     private void IsDeathHandler()
     {
-        _healthController.isDeath -= IsDeathHandler;
+        _healthController.OnDeath -= IsDeathHandler;
         Instantiate(diamond, transform.position, transform.rotation);
         Destroy(gameObject);
     }

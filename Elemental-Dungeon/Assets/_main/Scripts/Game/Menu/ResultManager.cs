@@ -17,9 +17,9 @@ public class ResultManager : MonoBehaviour
     [SerializeField] private Button desactivePanelExitButton;
     [SerializeField] private Button exitButton;
 
-    private GameState gameState;
-    private const string path = "Game";
-    private const string fileName = "GameState";
+    private GameState _gameState;
+    private const string _path = "Game";
+    private const string _fileName = "GameState";
 
     private void Awake()
     {
@@ -30,8 +30,8 @@ public class ResultManager : MonoBehaviour
         desactivePanelExitButton.onClick.AddListener(DesactivePanelExitHandler);
         exitButton.onClick.AddListener(ExitAplicationHandler);
 
-        gameState = GameState.newGame;
-        SaveLoadSystemData.SaveData(gameState, path, fileName);
+        _gameState = GameState.newGame;
+        SaveLoadSystemData.SaveData(_gameState, _path, _fileName);
     }
 
     private void playAgainButtonHandler()

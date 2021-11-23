@@ -21,7 +21,7 @@ public class CactusController : MonoBehaviour
         _time = 0;
 
         _healthController.SetDefaultHealth();
-        _healthController.isDeath += IsDeathHandler;
+        _healthController.OnDeath += IsDeathHandler;
     }
 
     private void Update()
@@ -53,7 +53,7 @@ public class CactusController : MonoBehaviour
 
     private void IsDeathHandler()
     {
-        _healthController.isDeath -= IsDeathHandler;
+        _healthController.OnDeath -= IsDeathHandler;
         Instantiate(diamond, transform.position, Quaternion.Euler(Vector3.zero));
         Destroy(gameObject);
     }

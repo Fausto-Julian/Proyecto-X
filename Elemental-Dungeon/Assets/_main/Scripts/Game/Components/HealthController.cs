@@ -8,8 +8,8 @@ public class HealthController : MonoBehaviour
     [SerializeField] private float maxHealth;
     [SerializeField] private float currentHealth;
 
-    public Action<float> changeHealth;
-    public Action isDeath;
+    public Action<float> OnChangeHealth;
+    public Action OnDeath;
 
     private bool isAlive = true;
     public void SetHealth(float health)
@@ -28,11 +28,11 @@ public class HealthController : MonoBehaviour
     {
         currentHealth -= damage;
 
-        changeHealth?.Invoke(currentHealth);
+        OnChangeHealth?.Invoke(currentHealth);
         if (currentHealth <= 0 && isAlive)
         {
             isAlive = false;
-            isDeath?.Invoke();
+            OnDeath?.Invoke();
         }
     }
 

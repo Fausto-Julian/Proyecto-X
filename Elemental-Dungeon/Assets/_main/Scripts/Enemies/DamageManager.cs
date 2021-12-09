@@ -19,8 +19,8 @@ public class DamageManager : MonoBehaviour
     {
         if (_onFire == false)
         {
-            StartCoroutine(SetOnFire(damegeForSecond, timeout));
             _onFire = true;
+            StartCoroutine(SetOnFire(damegeForSecond, timeout));
         }
         
     }

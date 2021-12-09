@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private string headerText;
-    [SerializeField] private string contentText;
+    [SerializeField, Multiline()] private string contentText;
     [SerializeField] private Sprite image;
     public void OnPointerEnter(PointerEventData eventData)
     {

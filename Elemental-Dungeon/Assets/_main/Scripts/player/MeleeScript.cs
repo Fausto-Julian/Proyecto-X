@@ -17,5 +17,15 @@ public class MeleeScript : MonoBehaviour
                 healthController.SetDamage(damage);
             }
         }
+        
+        if (collision.gameObject.CompareTag("EnemyNoTarget"))
+        {
+            HealthController healthController = collision.GetComponent<HealthController>();
+
+            if (healthController != null)
+            {
+                healthController.SetDamage(damage);
+            }
+        }
     }
 }

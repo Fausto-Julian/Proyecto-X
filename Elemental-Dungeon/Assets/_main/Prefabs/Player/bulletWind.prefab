@@ -49,6 +49,10 @@ MonoBehaviour:
   timeLifeBullet: 1.5
   damageDefault: 20
   speed: 10
+  fireBullet: 0
+  waterBullet: 0
+  rockBullet: 0
+  windBullet: 1
 --- !u!212 &8063050263579448512
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -677,7 +677,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   headerText: Fire Level 1
-  contentText: "Aumenta 10% al da\xF1o base. Coste = 10 Diamantes."
+  contentText: "Aumenta 10% al da\xF1o base. \nCoste = 10 Diamantes."
   image: {fileID: 0}
 --- !u!1001 &128462678
 PrefabInstance:
@@ -1278,7 +1278,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   headerText: Fire Level 2
-  contentText: "Aumenta 20% al da\xF1o base. Coste = 15 Diamantes."
+  contentText: "Aumenta 20% al da\xF1o base. \nCoste = 15 Diamantes."
   image: {fileID: 0}
 --- !u!1 &222926810
 GameObject:
@@ -2488,7 +2488,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   headerText: Fire Level 4
-  contentText: "Aumenta 40% al da\xF1o base. Coste = 25 Diamantes."
+  contentText: "Aumenta 40% al da\xF1o base. \nCoste = 25 Diamantes."
   image: {fileID: 0}
 --- !u!1001 &696040613
 PrefabInstance:
@@ -3949,9 +3949,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1280240062}
+  - component: {fileID: 1280240067}
+  - component: {fileID: 1280240066}
+  - component: {fileID: 1280240065}
+  - component: {fileID: 1280240064}
   m_Layer: 0
   m_Name: Enemigo Fuego
-  m_TagString: Untagged
+  m_TagString: EnemyNoTarget
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3972,6 +3976,83 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1280240064
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1280240061}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.014567852, y: -0.033991635}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.0291357, y: 1.0679833}
+  m_EdgeRadius: 0
+--- !u!50 &1280240065
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1280240061}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
+--- !u!114 &1280240066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1280240061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fe5a1973fa06b54dba6147df69cbaab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 10
+  radius: 20
+  damage: 15
+  diamond: {fileID: 9132900415335629046, guid: 9deb5260718ad8f4880ad56c1e6eea44, type: 3}
+--- !u!114 &1280240067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1280240061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 404edefd03972bf429af047b90d1c1fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
 --- !u!1001 &1311095372
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5502,7 +5583,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   headerText: Fire Level 3
-  contentText: "Aumenta 30% al da\xF1o base. Coste = 20 Diamantes."
+  contentText: "Aumenta 30% al da\xF1o base. \nCoste = 20 Diamantes."
   image: {fileID: 0}
 --- !u!114 &1702237919 stripped
 MonoBehaviour:
@@ -5763,6 +5844,7 @@ GameObject:
   - component: {fileID: 1931342418}
   - component: {fileID: 1931342417}
   - component: {fileID: 1931342416}
+  - component: {fileID: 1931342419}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5833,8 +5915,40 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1931342419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931342415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
 --- !u!1 &1932604556
 GameObject:
   m_ObjectHideFlags: 0
@@ -6648,6 +6762,10 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 8385510742010606776, guid: 169abadb1dc575d408909357714ff0be, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 169abadb1dc575d408909357714ff0be, type: 3}

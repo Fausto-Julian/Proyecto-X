@@ -89,9 +89,13 @@ public class BulletPlayer : MonoBehaviour
                     }
                     Destroy(gameObject);
                 }
-
             }
         }
+        else if (collision.gameObject.CompareTag("EnemyNoTarget"))
+        {
+            Destroy(gameObject);
+        }
+        
 
         if (collision.gameObject.CompareTag("Wall")) 
             Destroy(gameObject);

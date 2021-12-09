@@ -15,6 +15,7 @@ TagManager:
   - WinZone
   - Door
   - DoorBoss
+  - EnemyNoTarget
   layers:
   - Default
   - TransparentFX

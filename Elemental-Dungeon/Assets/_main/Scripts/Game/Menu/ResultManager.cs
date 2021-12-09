@@ -41,7 +41,7 @@ public class ResultManager : MonoBehaviour
 
     private void BackToMenuHandler()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("Menu");
     }
 
     private void ActivePanelExitHandler()

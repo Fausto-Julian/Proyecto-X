@@ -6,10 +6,15 @@ using UnityEngine.AI;
 public class SlimeControllerScript : MonoBehaviour
 {
 
+    [Header("Stats")]
     [SerializeField] private float speed;
     [SerializeField] private float radius;
     [SerializeField] private int damage;
 
+    [Space]
+    [Header("Instaciar")]
+    [SerializeField] private GameObject nexSlime;
+    [SerializeField, Range(1, 2)] private int level;
     [SerializeField] private GameObject diamond;
 
     private Rigidbody2D _body;
@@ -35,7 +40,24 @@ public class SlimeControllerScript : MonoBehaviour
     private void IsDeathHandler()
     {
         _healthController.OnDeath -= IsDeathHandler;
-        Instantiate(diamond, transform.position, transform.rotation);
+        if (nexSlime != null)
+        {
+            if (level == 2)
+            {
+                Instantiate(nexSlime, transform.position, transform.rotation);
+                Instantiate(nexSlime, transform.position + new Vector3(0f, 1.5f), transform.rotation);
+                Instantiate(nexSlime, transform.position + new Vector3(0f, -1.5f), transform.rotation);
+            }
+            else if (level == 1)
+            {
+                Instantiate(nexSlime, transform.position, transform.rotation);
+                Instantiate(nexSlime, transform.position + new Vector3(0f, 1.5f), transform.rotation);
+            }
+        }
+        else
+        {
+            Instantiate(diamond, transform.position, transform.rotation);
+        }
         Destroy(gameObject);
     }
 

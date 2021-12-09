@@ -141,20 +141,15 @@ public class GameManager : MonoBehaviour
 
     private void DefeatGameHandler()
     {
-        SceneManager.LoadScene(11);
-        ResetGame();
-    }
-
-    private void ResetGame()
-    {
+        
         _playerHealthController.OnChangeHealth -= SetPlayerCurrentLife;
-        _playerHealthController.OnDeath -= ResetGame;
+        _playerHealthController.OnDeath -= DefeatGameHandler;
         _gameState = GameState.newGame;
         _playerData.currenHealthPlayer = 0;
         _playerData.diamondPoints = 0;
         _playerData.levelIndex = 1;
         SaveData();
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("DefeatScene");
         SkillTreeManager.inst.DeletedManagerHandler();
         HudManager.inst.DeletedManagerHandler();
         PauseGameManager.inst.DeletedManagerHandler();

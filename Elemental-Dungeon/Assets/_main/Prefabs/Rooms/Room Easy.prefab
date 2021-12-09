@@ -794,6 +794,8 @@ MonoBehaviour:
   enemyBossPrefab: {fileID: 0}
   enemysPrefabs:
   - {fileID: 8717975841907590694, guid: 764719f77d377b9438363047132fbb45, type: 3}
+  - {fileID: 2421355234766578674, guid: 11bc8a18f541b7a46a6d94270c000a5c, type: 3}
+  - {fileID: 7180226693618794992, guid: caa9adbbad9e940459bfb24470aac184, type: 3}
   spawners:
   - {fileID: 229331232764570773}
   - {fileID: 7893475853424998447}

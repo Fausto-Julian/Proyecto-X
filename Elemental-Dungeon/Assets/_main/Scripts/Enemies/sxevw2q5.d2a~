@@ -1,0 +1,67 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class FireDamage{
+    public float damageForSecond;
+    public float timeout;
+}
+
+[RequireComponent(typeof(HealthController))]
+public class DamageManager : MonoBehaviour
+{
+    private HealthController _healthController;
+
+    private bool _onFire;
+    private FireDamage _fireDamage = new FireDamage();
+
+    private bool _time = false;
+
+    private void Awake()
+    {
+        _healthController = GetComponent<HealthController>();
+        _onFire = false;
+    }
+
+    private void Update()
+    {
+        Debug.Log(_time);
+        if (_onFire && _time == false)
+        {
+            Invoke("SetOnFire", 1f);
+            Invoke("prueba", _fireDamage.timeout);
+            //StartCoroutine(Timer(1f));
+        }
+    }
+
+    public void ActiveSetFire(float damegeForSecond, float timeout)
+    {
+        _time = true;
+        _fireDamage.damageForSecond = damegeForSecond;
+        _fireDamage.timeout = timeout;
+    }
+
+    private void SetOnFire()
+    {
+        _healthController.SetDamage(_fireDamage.damageForSecond);
+    }
+
+    private void prueba()
+    {
+        _time = false;
+    }
+
+    IEnumerator Timer2(float timeout)
+    {
+        _onFire = true;
+        yield return new WaitForSeconds(timeout);
+        _onFire = false;
+    }
+
+    IEnumerator Timer(float timeout)
+    {
+        _time = true;
+        yield return new WaitForSeconds(timeout);
+        _time = false;
+    }
+}

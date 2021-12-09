@@ -12,7 +12,6 @@ public class WinZone : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private bool _open;
 
-
     private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -36,7 +35,7 @@ public class WinZone : MonoBehaviour
         if (levelFinal)
         {
             if (collision.gameObject.CompareTag("Player") && _open)
-                SceneManager.LoadScene(12);
+                SceneManager.LoadScene("WinScene");
         }
         else
         {

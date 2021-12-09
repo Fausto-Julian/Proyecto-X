@@ -7,13 +7,23 @@ public class SkillTreeManager : MonoBehaviour
 {
     public static SkillTreeManager inst;
 
+    private const string _pathGame = "Game";
+    private const string _pathPlayer = "Player";
+    private const string _filenameGameState = "GameState";
+    private const string _filenameAbilitys = "Abilitys";
+
     [Header("Panel")]
     [SerializeField] private GameObject panel;
     [SerializeField] private Button buttonExitSkillTreeMenu;
 
     [Header("Prefabs Bullets")]
     [SerializeField] private GameObject bulletFirePrefab;
+    [SerializeField] private GameObject bulletWaterPrefab;
+    [SerializeField] private GameObject bulletRockPrefab;
+    [SerializeField] private GameObject bulletWindPrefab;
 
+    [SerializeField] private float timeText;
+    [SerializeField] private GameObject textAlert;
 
     #region LevelUp Fire
     [Header("LevelUp Fire")]
@@ -27,8 +37,7 @@ public class SkillTreeManager : MonoBehaviour
     [SerializeField] private Button buttonLevelFire3;
     [SerializeField] private Button buttonLevelFire4;
 
-    private int levelFire = 0;
-    private int levelDamageFire = 0;
+    private Ability fireAbility = new Ability();
     private int defaultDamageFire;
     #endregion
 
@@ -44,8 +53,7 @@ public class SkillTreeManager : MonoBehaviour
     [SerializeField] private Button buttonLevelWater3;
     [SerializeField] private Button buttonLevelWater4;
 
-    private int levelWater = 0;
-    private int levelDamageWater = 0;
+    private Ability waterAbility = new Ability();
     private int defaultDamageWater;
     #endregion
 
@@ -61,8 +69,7 @@ public class SkillTreeManager : MonoBehaviour
     [SerializeField] private Button buttonLevelRock3;
     [SerializeField] private Button buttonLevelRock4;
 
-    private int levelRock = 0;
-    private int levelDamageRock = 0;
+    private Ability rockAbility = new Ability();
     private int defaultDamageRock;
     #endregion
 
@@ -78,9 +85,7 @@ public class SkillTreeManager : MonoBehaviour
     [SerializeField] private Button buttonLevelWind3;
     [SerializeField] private Button buttonLevelWind4;
 
-
-    private int levelWind = 0;
-    private int levelDamageWind = 0;
+    private Ability windAbility = new Ability();
     private int defaultDamageWind;
     #endregion
 
@@ -95,12 +100,22 @@ public class SkillTreeManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        GameState game = SaveLoadSystemData.LoadData<GameState>(_pathGame, _filenameGameState);
+        if (game == GameState.newGame)
+        {
+            ResetAbilitys();
+            SaveLoadSystemData.SaveData(fireAbility, _pathPlayer, _filenameAbilitys);
+        }
+        else
+        {
+            fireAbility = SaveLoadSystemData.LoadData<Ability>(_pathPlayer, _filenameAbilitys);
+        }
 
         defaultDamageFire = bulletFirePrefab.GetComponent<BulletPlayer>().DamageDefaultFire();
 
         buttonExitSkillTreeMenu.onClick.AddListener(DesactivePanel);
 
-        #region LevelUp Fire
+        #region fireButton
         buttonLevelFire1.onClick.AddListener(UpGradeFireHandler);
         buttonLevelFire2.onClick.AddListener(UpGradeFireHandler);
         buttonLevelFire3.onClick.AddListener(UpGradeFireHandler);
@@ -110,21 +125,21 @@ public class SkillTreeManager : MonoBehaviour
         buttonLevelFire4.interactable = false;
         #endregion
 
-        #region LevelUp Water
+        #region WaterButton
         buttonLevelWater1.onClick.AddListener(UpGradeWaterHandler);
         buttonLevelWater2.onClick.AddListener(UpGradeWaterHandler);
         buttonLevelWater3.onClick.AddListener(UpGradeWaterHandler);
         buttonLevelWater4.onClick.AddListener(UpGradeWaterHandler);
         #endregion
 
-        #region LevelUp Rock
+        #region RockButton
         buttonLevelRock1.onClick.AddListener(UpGradeRockHandler);
         buttonLevelRock2.onClick.AddListener(UpGradeRockHandler);
         buttonLevelRock3.onClick.AddListener(UpGradeRockHandler);
         buttonLevelRock4.onClick.AddListener(UpGradeRockHandler);
         #endregion
 
-        #region LevelUp Wind
+        #region WindButton
         buttonLevelWind1.onClick.AddListener(UpGradeWindHandler);
         buttonLevelWind2.onClick.AddListener(UpGradeWindHandler);
         buttonLevelWind3.onClick.AddListener(UpGradeWindHandler);
@@ -132,286 +147,127 @@ public class SkillTreeManager : MonoBehaviour
         #endregion
     }
 
-    #region LevelUp Fire
-    private void UpGradeFireHandler()
+    private void ResetAbilitys()
     {
-        levelFire += 1;
+        fireAbility.level = 0;
+        fireAbility.levelDamage = 0;
 
-        switch (levelFire)
+        waterAbility.level = 0;
+        waterAbility.levelDamage = 0;
+
+        rockAbility.level = 0;
+        rockAbility.levelDamage = 0;
+
+        windAbility.level = 0;
+        windAbility.levelDamage = 0;
+    }
+
+    private void Upgrader(ref Ability ability, ref Button button1, ref Button button2, ref Button button3, ref Button button4, int defaultDamage, int costLevel1, int costLevel2, int costLevel3, int costLevel4)
+    {
+        ability.level += 1;
+
+        switch (ability.level)
         {
             case 1:
-                if (costDiamondLevelFire1 <= GameManager.inst.GetDiamondPoint())
+                if (costLevel1 <= GameManager.inst.GetDiamondPoint())
                 {
-                    levelDamageFire += defaultDamageFire * 10 / 100;
+                    ability.levelDamage += defaultDamage * 10 / 100;
                     var colors = buttonLevelFire1.colors;
                     colors.disabledColor = Color.blue;
-                    buttonLevelFire1.colors = colors;
-                    buttonLevelFire1.interactable = false;
-                    buttonLevelFire2.interactable = true;
-                    GameManager.inst.subtractDiamond(costDiamondLevelFire1);
+                    button1.colors = colors;
+                    button1.interactable = false;
+                    button2.interactable = true;
+                    GameManager.inst.subtractDiamond(costLevel1);
                 }
                 else
                 {
-                    // Text No puedes desbloquear
-                    levelFire = 0;
+                    StartCoroutine(mesaggeAlert());
+                    ability.level = 0;
                 }
                 break;
             case 2:
-                if (costDiamondLevelFire2 <= GameManager.inst.GetDiamondPoint())
+                if (costLevel2 <= GameManager.inst.GetDiamondPoint())
                 {
-                    levelDamageFire += defaultDamageFire * 20 / 100;
-                    buttonLevelFire2.interactable = false;
-                    buttonLevelFire3.interactable = true;
-                    GameManager.inst.subtractDiamond(costDiamondLevelFire2);
+                    ability.levelDamage += defaultDamage * 20 / 100;
+                    button2.interactable = false;
+                    button3.interactable = true;
+                    GameManager.inst.subtractDiamond(costLevel2);
                 }
                 else
                 {
-                    // Text No puedes desbloquear
-                    levelFire = 1;
+                    StartCoroutine(mesaggeAlert());
+                    ability.level = 1;
                 }
                 break;
             case 3:
-                if (costDiamondLevelFire3 <= GameManager.inst.GetDiamondPoint())
+                if (costLevel3 <= GameManager.inst.GetDiamondPoint())
                 {
-                    levelDamageFire += defaultDamageFire * 30 / 100;
-                    buttonLevelFire3.interactable = false;
-                    buttonLevelFire4.interactable = true;
-                    GameManager.inst.subtractDiamond(costDiamondLevelFire3);
+                    ability.levelDamage += defaultDamage * 30 / 100;
+                    button3.interactable = false;
+                    button4.interactable = true;
+                    GameManager.inst.subtractDiamond(costLevel3);
                 }
                 else
                 {
-                    // Text No puedes desbloquear
-                    levelFire = 2;
+                    StartCoroutine(mesaggeAlert());
+                    ability.level = 2;
                 }
                 break;
             case 4:
-                if (costDiamondLevelFire4 <= GameManager.inst.GetDiamondPoint())
+                if (costLevel4 <= GameManager.inst.GetDiamondPoint())
                 {
-                    levelDamageFire += defaultDamageFire * 40 / 100;
-                    buttonLevelFire4.interactable = false;
-                    GameManager.inst.subtractDiamond(costDiamondLevelFire4);
+                    ability.levelDamage += defaultDamage * 40 / 100;
+                    button4.interactable = false;
+                    GameManager.inst.subtractDiamond(costLevel4);
                 }
                 else
                 {
-                    // Text No puedes desbloquear
-                    levelFire = 3;
+                    StartCoroutine(mesaggeAlert());
+                    ability.level = 3;
                 }
                 break;
         }
+    }
+
+    private void UpGradeFireHandler()
+    {
+        Upgrader(ref fireAbility, ref buttonLevelFire1, ref buttonLevelFire2, ref buttonLevelFire3, ref buttonLevelFire4, defaultDamageFire, costDiamondLevelFire1, costDiamondLevelFire2, costDiamondLevelFire3, costDiamondLevelFire4);
     }
     
-    public int LevelFire()
+    public Ability GetAbilityFire()
     {
-        return levelDamageFire;
+        return fireAbility;
     }
-    #endregion
 
-    #region LevelUp Water
     private void UpGradeWaterHandler()
     {
-        levelWater += 1;
-
-        switch (levelWater)
-        {
-            case 1:
-
-                if (costDiamondLevelWater1 <= GameManager.inst.GetDiamondPoint())
-                {
-                    levelDamageWater += defaultDamageWater * 10 / 100;
-                    buttonLevelWater1.interactable = false;
-                    GameManager.inst.subtractDiamond(costDiamondLevelWater1);
-                }
-                else
-                {
-                    // Text No puedes desbloquear
-                    levelWater = 0;
-                }
-                break;
-            case 2:
-                if (costDiamondLevelWater2 <= GameManager.inst.GetDiamondPoint())
-                {
-                    levelDamageWater += defaultDamageWater * 20 / 100;
-                    buttonLevelWater2.interactable = false;
-                    GameManager.inst.subtractDiamond(costDiamondLevelWater2);
-                }
-                else
-                {
-                    // Text No puedes desbloquear
-                    levelWater = 1;
-                }
-                break;
-            case 3:
-                if (costDiamondLevelWater3 <= GameManager.inst.GetDiamondPoint())
-                {
-                    levelDamageWater += defaultDamageWater * 30 / 100;
-                    buttonLevelWater3.interactable = false;
-                    GameManager.inst.subtractDiamond(costDiamondLevelWater3);
-                }
-                else
-                {
-                    // Text No puedes desbloquear
-                    levelWater = 2;
-                }
-                break;
-            case 4:
-                if (costDiamondLevelWater4 <= GameManager.inst.GetDiamondPoint())
-                {
-                    levelDamageWater += defaultDamageWater * 40 / 100;
-                    buttonLevelWater4.interactable = false;
-                    GameManager.inst.subtractDiamond(costDiamondLevelWater4);
-                }
-                else
-                {
-                    // Text No puedes desbloquear
-                    levelWater = 3;
-                }
-                break;
-        }
+        Upgrader(ref waterAbility, ref buttonLevelWater1, ref buttonLevelWater2, ref buttonLevelWater3, ref buttonLevelWater4, defaultDamageWater, costDiamondLevelWater1, costDiamondLevelWater2, costDiamondLevelWater3, costDiamondLevelWater4);
     }
 
-    public int LevelWater()
+    public Ability GetAbilityWater()
     {
-        return levelDamageWater;
+        return waterAbility;
     }
-    #endregion
 
-    #region LevelUp Rock
     private void UpGradeRockHandler()
     {
-        levelRock += 1;
-
-        switch (levelRock)
-        {
-            case 1:
-
-                if (costDiamondLevelRock1 <= GameManager.inst.GetDiamondPoint())
-                {
-                    levelDamageRock += defaultDamageRock * 10 / 100;
-                    buttonLevelRock1.interactable = false;
-                    GameManager.inst.subtractDiamond(costDiamondLevelRock1);
-                }
-                else
-                {
-                    // Text No puedes desbloquear
-                    levelRock = 0;
-                }
-                break;
-            case 2:
-                if (costDiamondLevelRock2 <= GameManager.inst.GetDiamondPoint())
-                {
-                    levelDamageRock += defaultDamageRock * 20 / 100;
-                    buttonLevelRock2.interactable = false;
-                    GameManager.inst.subtractDiamond(costDiamondLevelRock2);
-                }
-                else
-                {
-                    // Text No puedes desbloquear
-                    levelRock = 1;
-                }
-                break;
-            case 3:
-                if (costDiamondLevelRock3 <= GameManager.inst.GetDiamondPoint())
-                {
-                    levelDamageRock += defaultDamageRock * 30 / 100;
-                    buttonLevelRock3.interactable = false;
-                    GameManager.inst.subtractDiamond(costDiamondLevelRock3);
-                }
-                else
-                {
-                    // Text No puedes desbloquear
-                    levelRock = 2;
-                }
-                break;
-            case 4:
-                if (costDiamondLevelRock4 <= GameManager.inst.GetDiamondPoint())
-                {
-                    levelDamageRock += defaultDamageRock * 40 / 100;
-                    buttonLevelRock4.interactable = false;
-                    GameManager.inst.subtractDiamond(costDiamondLevelRock4);
-                }
-                else
-                {
-                    // Text No puedes desbloquear
-                    levelRock = 3;
-                }
-                break;
-        }
+        Upgrader(ref rockAbility, ref buttonLevelRock1, ref buttonLevelRock2, ref buttonLevelRock3, ref buttonLevelRock4, defaultDamageRock, costDiamondLevelRock1, costDiamondLevelRock2, costDiamondLevelRock3, costDiamondLevelRock4);
     }
 
-    public int LevelRock()
+    public Ability GetAbilityRock()
     {
-        return levelDamageRock;
+        return rockAbility;
     }
-    #endregion
 
-    #region LevelUp Wind
     private void UpGradeWindHandler()
     {
-        levelWind += 1;
-
-        switch (levelWind)
-        {
-            case 1:
-
-                if (costDiamondLevelWind1 <= GameManager.inst.GetDiamondPoint())
-                {
-                    levelDamageWind += defaultDamageWind * 10 / 100;
-                    buttonLevelWind1.interactable = false;
-                    GameManager.inst.subtractDiamond(costDiamondLevelWind1);
-                }
-                else
-                {
-                    // Text No puedes desbloquear
-                    levelWind = 0;
-                }
-                break;
-            case 2:
-                if (costDiamondLevelWind2 <= GameManager.inst.GetDiamondPoint())
-                {
-                    levelDamageWind += defaultDamageWind * 20 / 100;
-                    buttonLevelWind2.interactable = false;
-                    GameManager.inst.subtractDiamond(costDiamondLevelWind2);
-                }
-                else
-                {
-                    // Text No puedes desbloquear
-                    levelWind = 1;
-                }
-                break;
-            case 3:
-                if (costDiamondLevelWind3 <= GameManager.inst.GetDiamondPoint())
-                {
-                    levelDamageWind += defaultDamageWind * 30 / 100;
-                    buttonLevelWind3.interactable = false;
-                    GameManager.inst.subtractDiamond(costDiamondLevelWind3);
-                }
-                else
-                {
-                    // Text No puedes desbloquear
-                    levelWind = 2;
-                }
-                break;
-            case 4:
-                if (costDiamondLevelFire4 <= GameManager.inst.GetDiamondPoint())
-                {
-                    levelDamageWind += defaultDamageWind * 40 / 100;
-                    buttonLevelWind4.interactable = false;
-                    GameManager.inst.subtractDiamond(costDiamondLevelWind4);
-                }
-                else
-                {
-                    // Text No puedes desbloquear
-                    levelWind = 3;
-                }
-                break;
-        }
+        Upgrader(ref windAbility, ref buttonLevelWind1, ref buttonLevelWind2, ref buttonLevelWind3, ref buttonLevelWind4, defaultDamageWind, costDiamondLevelWind1, costDiamondLevelWind2, costDiamondLevelWind3, costDiamondLevelWind4);
     }
 
-    public int LevelWind()
+    public Ability GetAbilityWind()
     {
-        return levelDamageWind;
+        return windAbility;
     }
-    #endregion
 
     public void ActivePanel()
     {
@@ -423,6 +279,16 @@ public class SkillTreeManager : MonoBehaviour
     {
         PauseGameManager.inst.IsGameRunning();
         panel.SetActive(false);
+    }
+
+    IEnumerator mesaggeAlert()
+    {
+        if (textAlert != null)
+        {
+            textAlert.SetActive(true);
+            yield return new WaitForSecondsRealtime(timeText);
+            textAlert.SetActive(false);
+        }
     }
 
     public void DeletedManagerHandler()

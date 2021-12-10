@@ -9,7 +9,7 @@ public class SlimeControllerScript : MonoBehaviour
     [Header("Stats")]
     [SerializeField] private float speed;
     [SerializeField] private float radius;
-    [SerializeField] private int damage;
+    [SerializeField] private float damage;
 
     [Space]
     [Header("Instaciar")]

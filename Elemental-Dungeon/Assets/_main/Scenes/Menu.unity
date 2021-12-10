@@ -2597,6 +2597,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Online
       objectReference: {fileID: 0}
+    - target: {fileID: 4187789841628495576, guid: d961b253034e8a44391474484a3ef764, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4187789841628495579, guid: d961b253034e8a44391474484a3ef764, type: 3}
       propertyPath: m_RootOrder
       value: 3

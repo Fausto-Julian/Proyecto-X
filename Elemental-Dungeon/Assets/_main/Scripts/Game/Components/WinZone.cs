@@ -40,7 +40,10 @@ public class WinZone : MonoBehaviour
         else
         {
             if (collision.gameObject.CompareTag("Player") && _open)
+            {
                 GameManager.inst.NextLevel();
+                GameManager.inst.SetPlayerHealthController();
+            }
         }
     }
 

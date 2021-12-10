@@ -9151,7 +9151,7 @@ MonoBehaviour:
   roomDefault: 0
   bossRoom: 1
   enemysRoom: 1
-  enemyBossPrefab: {fileID: 7192702481603306640, guid: 7cde45016d474d247b3bd3681afe11ae, type: 3}
+  enemyBossPrefab: {fileID: 2273530241819889671, guid: 591b6138ced643448916e8cb43f9b772, type: 3}
   enemysPrefabs: []
   spawners:
   - {fileID: 4626162195057832148}

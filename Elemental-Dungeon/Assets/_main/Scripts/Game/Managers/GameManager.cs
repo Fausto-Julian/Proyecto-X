@@ -41,6 +41,11 @@ public class GameManager : MonoBehaviour
         }
 
         _playerData.levelIndex = 1;
+        SetPlayerHealthController();
+    }
+
+    public void SetPlayerHealthController()
+    {
         _playerHealthController = GameObject.FindGameObjectWithTag("Player").GetComponent<HealthController>();
         _playerHealthController.OnChangeHealth += SetPlayerCurrentLife;
         _playerHealthController.OnDeath += DefeatGameHandler;

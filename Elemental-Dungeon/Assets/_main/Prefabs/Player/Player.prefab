@@ -29,7 +29,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7392889832265614655}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1913977740
 MonoBehaviour:
@@ -102,7 +102,7 @@ Transform:
   - {fileID: 7392889832650996562}
   - {fileID: 7392889833033947623}
   m_Father: {fileID: 7392889832265614655}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7392889832265614640
 GameObject:
@@ -119,6 +119,7 @@ GameObject:
   - component: {fileID: 7392889832265614653}
   - component: {fileID: 7392889832265614649}
   - component: {fileID: 7357510155518426758}
+  - component: {fileID: 2874056050808700345}
   m_Layer: 31
   m_Name: Player
   m_TagString: Player
@@ -137,9 +138,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
-  - {fileID: 7392889833166260193}
   - {fileID: 8956327369611880572}
   - {fileID: 1913977739}
+  - {fileID: 7392889833166260193}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -156,7 +157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  currentHealth: 0
+  currentHealth: 100
 --- !u!114 &7392889832265614654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,14 +171,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  aceleracionMax: 7.5
   anim: {fileID: 7392889833166260207}
   center: {fileID: 8956327369611880572}
-  spawnPointAtack1: {fileID: 7392889832650996562}
-  bulletFire: {fileID: 8332722518457553871, guid: b39ff3fa4fe0acc41a7bdd124e155769, type: 3}
-  bulletWater: {fileID: 8499652476317378474, guid: 04b3cd8e4d3096445873bec0eb38c702, type: 3}
-  bulletRock: {fileID: 7624435668458593603, guid: 3e8c592206b255549b59cc8185a70bb5, type: 3}
-  bulletWind: {fileID: 873499462815877696, guid: 6bba7dc14348275419bf14e2c0e42296, type: 3}
   melee: {fileID: 7392889833033947612}
   espada: {fileID: 8300000, guid: 2e7affc09d2706e458659c6fc1fb54b8, type: 3}
 --- !u!61 &7392889832265614652
@@ -335,6 +330,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 075ba45ae2905dc419bd81fdd5846b38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2874056050808700345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7392889832265614640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f93253e645817ff4fa26632321d4a3b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bullets:
+  - {fileID: 8332722518457553871, guid: b39ff3fa4fe0acc41a7bdd124e155769, type: 3}
+  - {fileID: 8499652476317378474, guid: 04b3cd8e4d3096445873bec0eb38c702, type: 3}
+  - {fileID: 7624435668458593603, guid: 3e8c592206b255549b59cc8185a70bb5, type: 3}
+  - {fileID: 873499462815877696, guid: 6bba7dc14348275419bf14e2c0e42296, type: 3}
+  bulletsSprites:
+  - {fileID: 21300000, guid: 2a2f14474006bc849b8a88a97238c969, type: 3}
+  - {fileID: 21300000, guid: add83b5e6ee46e244b3d1f3688d71509, type: 3}
+  - {fileID: 21300000, guid: 90154dd9e56e16e469dcdddc8ebab5aa, type: 3}
+  - {fileID: 21300000, guid: 3419f2cca3cd3eb4582c58ff82e01ca1, type: 3}
+  anim: {fileID: 7392889833166260207}
+  spawnPointAtack1: {fileID: 7392889832650996562}
 --- !u!1 &7392889832650996563
 GameObject:
   m_ObjectHideFlags: 0
@@ -530,7 +549,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7392889832265614655}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7392889833166260192
 SpriteRenderer:

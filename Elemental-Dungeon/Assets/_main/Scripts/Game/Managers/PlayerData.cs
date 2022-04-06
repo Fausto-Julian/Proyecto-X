@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerData
 {
     public int levelIndex;
-    public int diamondPoints = 0;
+    public int diamondPoints;
+    public int life;
     public float currenHealthPlayer;
 }

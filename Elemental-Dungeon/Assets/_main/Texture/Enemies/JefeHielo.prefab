@@ -133,8 +133,8 @@ Animation:
   serializedVersion: 3
   m_Animation: {fileID: 7400000, guid: d0c3bd831a05a8142acacfcb2152c492, type: 2}
   m_Animations:
-  - {fileID: 7400000, guid: d0c3bd831a05a8142acacfcb2152c492, type: 2}
   - {fileID: 7400000, guid: bfb320dfb1a454b4f86ef5436fd4c468, type: 2}
+  - {fileID: 7400000, guid: d0c3bd831a05a8142acacfcb2152c492, type: 2}
   - {fileID: 7400000, guid: 16452d54f6f18e64da3d8ecce224e843, type: 2}
   - {fileID: 7400000, guid: d0f89f9d095bcfe46ae5dc59227807aa, type: 2}
   m_WrapMode: 0
@@ -195,7 +195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 404edefd03972bf429af047b90d1c1fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 1600
   currentHealth: 0
 --- !u!114 &6050516628070125898
 MonoBehaviour:

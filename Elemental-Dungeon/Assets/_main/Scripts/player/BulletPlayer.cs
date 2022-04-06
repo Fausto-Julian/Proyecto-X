@@ -39,6 +39,7 @@ public class BulletPlayer : MonoBehaviour
         {
             HealthController healthController = collision.GetComponent<HealthController>();
             DamageManager damageManager = collision.GetComponent<DamageManager>();
+            Animator anim = collision.GetComponent<Animator>();
 
             if (healthController != null)
             {
@@ -50,6 +51,10 @@ public class BulletPlayer : MonoBehaviour
                     if (damageManager != null)
                     {
                         damageManager.ActiveSetFire(1.2f, 6f);
+                    }
+                    if (anim != null)
+                    {
+                        StartCoroutine(DamageAnim(anim));
                     }
                     Destroy(gameObject);
                 }
@@ -63,6 +68,10 @@ public class BulletPlayer : MonoBehaviour
                     {
                         
                     }
+                    if (anim != null)
+                    {
+                        StartCoroutine(DamageAnim(anim));
+                    }
                     Destroy(gameObject);
                 }
 
@@ -75,6 +84,10 @@ public class BulletPlayer : MonoBehaviour
                     {
                         
                     }
+                    if (anim != null)
+                    {
+                        StartCoroutine(DamageAnim(anim));
+                    }
                     Destroy(gameObject);
                 }
 
@@ -86,6 +99,10 @@ public class BulletPlayer : MonoBehaviour
                     if (damageManager != null)
                     {
                         
+                    }
+                    if (anim != null)
+                    {
+                        StartCoroutine(DamageAnim(anim));
                     }
                     Destroy(gameObject);
                 }
@@ -101,7 +118,16 @@ public class BulletPlayer : MonoBehaviour
             Destroy(gameObject);
     }
 
-    public int DamageDefaultFire()
+    IEnumerator DamageAnim(Animator anim)
+    {
+        anim.SetBool("Hit", true);
+        gameObject.SetActive(false);
+        yield return new WaitForSecondsRealtime(1f);
+        anim.SetBool("Hit", false);
+        Destroy(gameObject);
+    }
+
+    public int DamageDefault()
     {
         return damageDefault;
     }

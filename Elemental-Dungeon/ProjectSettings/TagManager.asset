@@ -16,6 +16,7 @@ TagManager:
   - Door
   - DoorBoss
   - EnemyNoTarget
+  - BulletIcon
   layers:
   - Default
   - TransparentFX

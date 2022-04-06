@@ -8,7 +8,7 @@ public class RoomManager : MonoBehaviour
     [SerializeField] private bool roomDefault;
     [SerializeField] private bool bossRoom;
     [SerializeField, Range(2, 4)] private int enemysRoom;
-    [SerializeField] private GameObject enemyBossPrefab;
+    [SerializeField] private List<GameObject> enemyBossPrefabs;
     [SerializeField] private List<GameObject> enemysPrefabs = new List<GameObject>();
     [SerializeField] private List<Transform> spawners = new List<Transform>();
     [SerializeField] private List<Transform> spawnersWall = new List<Transform>();
@@ -37,7 +37,8 @@ public class RoomManager : MonoBehaviour
         {
             GameManager.inst.AddEnemyCount(1);
             var i = Random.Range(0, spawners.Count);
-            _enemyBoss = Instantiate(enemyBossPrefab, spawners[i].position, spawners[i].rotation);
+            var indexBoss = Random.Range(0, enemyBossPrefabs.Count);
+            _enemyBoss = Instantiate(enemyBossPrefabs[indexBoss], spawners[i].position, spawners[i].rotation);
             _enemyBoss.SetActive(false);
         }
         else
@@ -217,7 +218,7 @@ public class RoomManager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("EnemyNoTarget"))
         {
             _countEnemys += 1;
             doorUp.CloseDoor();
@@ -229,7 +230,7 @@ public class RoomManager : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("EnemyNoTarget"))
         {
             _countEnemys -= 1;
             GameManager.inst.RemoveEnemy();

@@ -23,6 +23,13 @@ public class TooltipSystem : MonoBehaviour
 
     public static void Hide()
     {
-        current.tooltip.gameObject.SetActive(false);
+        try
+        {
+            current.tooltip.gameObject.SetActive(false);
+        }
+        catch
+        {
+            Debug.LogError("Herror en hide tooltip");
+        }
     }
 }

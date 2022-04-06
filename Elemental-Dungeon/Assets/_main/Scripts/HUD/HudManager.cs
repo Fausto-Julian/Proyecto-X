@@ -9,43 +9,34 @@ public class HudManager : MonoBehaviour
 
     [SerializeField] private Image lifeBar;
     [SerializeField] private Text diamondCountText;
-    private HealthController _playerHealthController;
-    private GameManager _gameManager;
+    [SerializeField] private Text lifeCountText;
+    [SerializeField] private GameManager gameManager;
+    [SerializeField] private HealthController playerHealthController;
 
     private void Awake()
     {
         if (inst == null)
         {
             inst = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(gameObject);
         }
 
-        _gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-        _gameManager.OnChangeDiamond += DiamondChangeHandler;
-    }
-
-    private void Start()
-    {
-        _playerHealthController = GameObject.FindGameObjectWithTag("Player").GetComponent<HealthController>();
-
-        var maxHealth = _playerHealthController.GetDefaultHealth();
-        var currentHealth = _playerHealthController.GetCurrentHealth();
-        float health = currentHealth / maxHealth;
-
-        lifeBar.fillAmount = health;
+        gameManager.OnChangeDiamond += DiamondChangeHandler;
     }
 
     private void Update()
     {
-        var maxHealth = _playerHealthController.GetDefaultHealth();
-        var currentHealth = _playerHealthController.GetCurrentHealth();
-        float health = currentHealth / maxHealth;
+        if (playerHealthController != null)
+        {
+            var maxHealth = playerHealthController.GetDefaultHealth();
+            var currentHealth = playerHealthController.GetCurrentHealth();
+            float health = currentHealth / maxHealth;
 
-        lifeBar.fillAmount = health;
+            lifeBar.fillAmount = health;
+        }
     }
 
     private void DiamondChangeHandler(int diamond)
@@ -53,10 +44,11 @@ public class HudManager : MonoBehaviour
         diamondCountText.text = diamond.ToString();
     }
 
-    public void LoadHud(int diamondCount, float currentHealth)
+    public void LoadHud(int diamondCount, int life, float currentHealth)
     {
+        lifeCountText.text = life.ToString();
         diamondCountText.text = diamondCount.ToString();
-        lifeBar.fillAmount = currentHealth / _playerHealthController.GetDefaultHealth();
+        lifeBar.fillAmount = currentHealth / playerHealthController.GetDefaultHealth();
     }
 
     public void DeletedManagerHandler()

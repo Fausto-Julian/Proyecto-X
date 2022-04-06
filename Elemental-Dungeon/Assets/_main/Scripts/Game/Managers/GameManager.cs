@@ -14,17 +14,18 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager inst;
 
-    private int _enemysLevelCount = 0;
-
+    [SerializeField] private HealthController playerHealthController;
+    [SerializeField] private int lifePlayerDefault;
     private PlayerData _playerData = new PlayerData();
     public Action<int> OnChangeDiamond;
-    private HealthController _playerHealthController;
 
     private const string _pathGame = "Game";
     private const string _filenameGameState = "GameState";
     
     private const string _pathPlayer = "Player";
     private const string _fileNamePlayerData = "PlayerData";
+
+    private int _enemysLevelCount = 0;
 
     private GameState _gameState;
 
@@ -33,7 +34,6 @@ public class GameManager : MonoBehaviour
         if (inst == null)
         {
             GameManager.inst = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -46,9 +46,11 @@ public class GameManager : MonoBehaviour
 
     public void SetPlayerHealthController()
     {
-        _playerHealthController = GameObject.FindGameObjectWithTag("Player").GetComponent<HealthController>();
-        _playerHealthController.OnChangeHealth += SetPlayerCurrentLife;
-        _playerHealthController.OnDeath += DefeatGameHandler;
+        if (playerHealthController != null)
+        {
+            playerHealthController.OnChangeHealth += SetPlayerCurrentLife;
+            playerHealthController.OnDeath += DefeatGameHandler;
+        }
     }
 
     private void Start()
@@ -59,20 +61,16 @@ public class GameManager : MonoBehaviour
         {
             case GameState.newGame:
                 _gameState = GameState.game;
+                _playerData.life = lifePlayerDefault;
                 SaveData();
                 break;
             case GameState.game:
                 LoadData();
-                HudManager.inst.LoadHud(_playerData.diamondPoints, _playerData.currenHealthPlayer);
+                HudManager.inst.LoadHud(_playerData.diamondPoints, _playerData.life, _playerData.currenHealthPlayer);
                 break;
             default:
                 break;
         }
-    }
-
-    public GameState CheckGameState()
-    {
-        return _gameState;
     }
 
     #region Player Function
@@ -132,6 +130,7 @@ public class GameManager : MonoBehaviour
         SaveLoadSystemData.SaveData(_gameState, _pathGame, _filenameGameState);
         SaveLoadSystemData.SaveData(_playerData, _pathPlayer, _fileNamePlayerData);
     }
+
     public void NextLevel()
     {
         _playerData.levelIndex += 1;
@@ -146,19 +145,26 @@ public class GameManager : MonoBehaviour
 
     private void DefeatGameHandler()
     {
-        
-        _playerHealthController.OnChangeHealth -= SetPlayerCurrentLife;
-        _playerHealthController.OnDeath -= DefeatGameHandler;
-        _gameState = GameState.newGame;
-        _playerData.currenHealthPlayer = 0;
-        _playerData.diamondPoints = 0;
-        _playerData.levelIndex = 1;
-        SaveData();
-        SceneManager.LoadScene("DefeatScene");
-        SkillTreeManager.inst.DeletedManagerHandler();
-        HudManager.inst.DeletedManagerHandler();
-        PauseGameManager.inst.DeletedManagerHandler();
-        Destroy(gameObject, 1f);
+        if (_playerData.life <= 0)
+        {
+            playerHealthController.OnChangeHealth -= SetPlayerCurrentLife;
+            playerHealthController.OnDeath -= DefeatGameHandler;
+            _gameState = GameState.newGame;
+            _playerData.currenHealthPlayer = 0;
+            _playerData.diamondPoints = 0;
+            _playerData.levelIndex = 1;
+            SaveData();
+            SkillTreeManager.inst.DeletedManagerHandler();
+            PauseGameManager.inst.DeletedManagerHandler();
+            SceneManager.LoadScene("DefeatScene");
+        }
+        else
+        {
+            _playerData.life -= 1;
+            playerHealthController.SetDefaultHealth();
+            _playerData.currenHealthPlayer = playerHealthController.GetCurrentHealth();
+            HudManager.inst.LoadHud(_playerData.diamondPoints, _playerData.life, _playerData.currenHealthPlayer);
+        }
     }
 
     public void DeletedManagerHandler()

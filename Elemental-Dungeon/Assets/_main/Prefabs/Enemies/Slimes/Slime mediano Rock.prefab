@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &323067589070916627
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 215764729593118044, guid: d176458148e30b347ab22b3d2a7ada51, type: 3}
+      propertyPath: rock
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 215764729593118044, guid: d176458148e30b347ab22b3d2a7ada51, type: 3}
+      propertyPath: nexSlime
+      value: 
+      objectReference: {fileID: 5037239013998169023, guid: 1ed88adce70abfa4d8866a1043952f46, type: 3}
+    - target: {fileID: 864212915022236178, guid: d176458148e30b347ab22b3d2a7ada51, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: ce15d759b451e2d4892fe8c1974b1ae6, type: 2}
+    - target: {fileID: 2044868531213942406, guid: d176458148e30b347ab22b3d2a7ada51, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -7204682836150845221, guid: 1678b9bf1b46dd148ac00ffce74cac77, type: 3}
+    - target: {fileID: 6995800863658820437, guid: d176458148e30b347ab22b3d2a7ada51, type: 3}
+      propertyPath: m_Name
+      value: Slime mediano Rock
+      objectReference: {fileID: 0}
+    - target: {fileID: 8586212740846284491, guid: d176458148e30b347ab22b3d2a7ada51, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8586212740846284491, guid: d176458148e30b347ab22b3d2a7ada51, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8586212740846284491, guid: d176458148e30b347ab22b3d2a7ada51, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8586212740846284491, guid: d176458148e30b347ab22b3d2a7ada51, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8586212740846284491, guid: d176458148e30b347ab22b3d2a7ada51, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8586212740846284491, guid: d176458148e30b347ab22b3d2a7ada51, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8586212740846284491, guid: d176458148e30b347ab22b3d2a7ada51, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8586212740846284491, guid: d176458148e30b347ab22b3d2a7ada51, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8586212740846284491, guid: d176458148e30b347ab22b3d2a7ada51, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8586212740846284491, guid: d176458148e30b347ab22b3d2a7ada51, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8586212740846284491, guid: d176458148e30b347ab22b3d2a7ada51, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d176458148e30b347ab22b3d2a7ada51, type: 3}

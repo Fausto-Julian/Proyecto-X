@@ -15,6 +15,15 @@ public class SkillTreeManager : MonoBehaviour
     [Header("Panel")]
     [SerializeField] private GameObject panel;
     [SerializeField] private Button buttonExitSkillTreeMenu;
+    [SerializeField] private Button buttonAxie;
+    [SerializeField] private Button buttonAbility;
+    [SerializeField] private Button buttonExit;
+
+    [Header("Icons")]
+    [SerializeField] private GameObject iconFire;
+    [SerializeField] private GameObject iconWater;
+    [SerializeField] private GameObject iconRock;
+    [SerializeField] private GameObject iconWind;
 
     [Header("Prefabs Bullets")]
     [SerializeField] private GameObject bulletFirePrefab;
@@ -104,16 +113,29 @@ public class SkillTreeManager : MonoBehaviour
         if (game == GameState.newGame)
         {
             ResetAbilitys();
-            SaveLoadSystemData.SaveData(fireAbility, _pathPlayer, _filenameAbilitys);
+            SaveLoadSystemData.SaveData(fireAbility, _pathPlayer, (_filenameAbilitys + "Fire"));
+            SaveLoadSystemData.SaveData(waterAbility, _pathPlayer, (_filenameAbilitys + "Water"));
+            SaveLoadSystemData.SaveData(rockAbility, _pathPlayer, (_filenameAbilitys + "Rock"));
+            SaveLoadSystemData.SaveData(windAbility, _pathPlayer, (_filenameAbilitys + "Wind"));
         }
         else
         {
-            fireAbility = SaveLoadSystemData.LoadData<Ability>(_pathPlayer, _filenameAbilitys);
+            fireAbility = SaveLoadSystemData.LoadData<Ability>(_pathPlayer, (_filenameAbilitys + "Fire"));
+            waterAbility = SaveLoadSystemData.LoadData<Ability>(_pathPlayer, (_filenameAbilitys + "Water"));
+            rockAbility = SaveLoadSystemData.LoadData<Ability>(_pathPlayer, (_filenameAbilitys + "Rock"));
+            windAbility = SaveLoadSystemData.LoadData<Ability>(_pathPlayer, (_filenameAbilitys + "Wind"));
         }
 
-        defaultDamageFire = bulletFirePrefab.GetComponent<BulletPlayer>().DamageDefaultFire();
+        defaultDamageFire = bulletFirePrefab.GetComponent<BulletPlayer>().DamageDefault();
+        defaultDamageWater = bulletWaterPrefab.GetComponent<BulletPlayer>().DamageDefault();
+        defaultDamageRock = bulletRockPrefab.GetComponent<BulletPlayer>().DamageDefault();
+        defaultDamageFire = bulletWindPrefab.GetComponent<BulletPlayer>().DamageDefault();
 
         buttonExitSkillTreeMenu.onClick.AddListener(DesactivePanel);
+
+        buttonExit.onClick.AddListener(ExitHandler);
+        buttonAbility.onClick.AddListener(ActiveAbilityButtonsHandler);
+        buttonAxie.onClick.AddListener(ActiveAxieButtonsHandler);
 
         #region fireButton
         buttonLevelFire1.onClick.AddListener(UpGradeFireHandler);
@@ -130,6 +152,9 @@ public class SkillTreeManager : MonoBehaviour
         buttonLevelWater2.onClick.AddListener(UpGradeWaterHandler);
         buttonLevelWater3.onClick.AddListener(UpGradeWaterHandler);
         buttonLevelWater4.onClick.AddListener(UpGradeWaterHandler);
+        buttonLevelWater2.interactable = false;
+        buttonLevelWater3.interactable = false;
+        buttonLevelWater4.interactable = false;
         #endregion
 
         #region RockButton
@@ -137,6 +162,9 @@ public class SkillTreeManager : MonoBehaviour
         buttonLevelRock2.onClick.AddListener(UpGradeRockHandler);
         buttonLevelRock3.onClick.AddListener(UpGradeRockHandler);
         buttonLevelRock4.onClick.AddListener(UpGradeRockHandler);
+        buttonLevelRock2.interactable = false;
+        buttonLevelRock3.interactable = false;
+        buttonLevelRock4.interactable = false;
         #endregion
 
         #region WindButton
@@ -144,7 +172,79 @@ public class SkillTreeManager : MonoBehaviour
         buttonLevelWind2.onClick.AddListener(UpGradeWindHandler);
         buttonLevelWind3.onClick.AddListener(UpGradeWindHandler);
         buttonLevelWind4.onClick.AddListener(UpGradeWindHandler);
+        buttonLevelWind2.interactable = false;
+        buttonLevelWind3.interactable = false;
+        buttonLevelWind4.interactable = false;
         #endregion
+    }
+
+    private void ActiveAxieButtonsHandler()
+    {
+        buttonAxie.gameObject.SetActive(false);
+        buttonAbility.gameObject.SetActive(false);
+
+        buttonExit.gameObject.SetActive(true);
+    }
+
+    private void ActiveAbilityButtonsHandler()
+    {
+        buttonAxie.gameObject.SetActive(false);
+        buttonAbility.gameObject.SetActive(false);
+
+        buttonExitSkillTreeMenu.gameObject.SetActive(false);
+        buttonExit.gameObject.SetActive(true);
+
+        iconFire.SetActive(true);
+        iconWater.SetActive(true);
+        iconRock.SetActive(true);
+        iconWind.SetActive(true);
+
+        buttonLevelFire1.gameObject.SetActive(true);
+        buttonLevelFire2.gameObject.SetActive(true);
+        buttonLevelFire3.gameObject.SetActive(true);
+        buttonLevelFire4.gameObject.SetActive(true);
+        buttonLevelWater1.gameObject.SetActive(true);
+        buttonLevelWater2.gameObject.SetActive(true);
+        buttonLevelWater3.gameObject.SetActive(true);
+        buttonLevelWater4.gameObject.SetActive(true);
+        buttonLevelRock1.gameObject.SetActive(true);
+        buttonLevelRock2.gameObject.SetActive(true);
+        buttonLevelRock3.gameObject.SetActive(true);
+        buttonLevelRock4.gameObject.SetActive(true);
+        buttonLevelWind1.gameObject.SetActive(true);
+        buttonLevelWind2.gameObject.SetActive(true);
+        buttonLevelWind3.gameObject.SetActive(true);
+        buttonLevelWind4.gameObject.SetActive(true);
+    }
+
+    private void ExitHandler()
+    {
+        buttonExitSkillTreeMenu.gameObject.SetActive(true);
+        buttonAxie.gameObject.SetActive(false);
+        buttonAbility.gameObject.SetActive(true);
+
+        iconFire.SetActive(false);
+        iconWater.SetActive(false);
+        iconRock.SetActive(false);
+        iconWind.SetActive(false);
+
+        buttonExit.gameObject.SetActive(false);
+        buttonLevelFire1.gameObject.SetActive(false);
+        buttonLevelFire2.gameObject.SetActive(false);
+        buttonLevelFire3.gameObject.SetActive(false);
+        buttonLevelFire4.gameObject.SetActive(false);
+        buttonLevelWater1.gameObject.SetActive(false);
+        buttonLevelWater2.gameObject.SetActive(false);
+        buttonLevelWater3.gameObject.SetActive(false);
+        buttonLevelWater4.gameObject.SetActive(false);
+        buttonLevelRock1.gameObject.SetActive(false);
+        buttonLevelRock2.gameObject.SetActive(false);
+        buttonLevelRock3.gameObject.SetActive(false);
+        buttonLevelRock4.gameObject.SetActive(false);
+        buttonLevelWind1.gameObject.SetActive(false);
+        buttonLevelWind2.gameObject.SetActive(false);
+        buttonLevelWind3.gameObject.SetActive(false);
+        buttonLevelWind4.gameObject.SetActive(false);
     }
 
     private void ResetAbilitys()
@@ -172,9 +272,6 @@ public class SkillTreeManager : MonoBehaviour
                 if (costLevel1 <= GameManager.inst.GetDiamondPoint())
                 {
                     ability.levelDamage += defaultDamage * 10 / 100;
-                    var colors = buttonLevelFire1.colors;
-                    colors.disabledColor = Color.blue;
-                    button1.colors = colors;
                     button1.interactable = false;
                     button2.interactable = true;
                     GameManager.inst.subtractDiamond(costLevel1);
@@ -224,6 +321,70 @@ public class SkillTreeManager : MonoBehaviour
                 {
                     StartCoroutine(mesaggeAlert());
                     ability.level = 3;
+                }
+                break;
+        }
+    }
+
+    private void UpgraderSword(ref int level, ref float levelDamage, ref Button button1, ref Button button2, ref Button button3, ref Button button4, int defaultDamage, int costLevel1, int costLevel2, int costLevel3, int costLevel4)
+    {
+        level += 1;
+
+        switch (level)
+        {
+            case 1:
+                if (costLevel1 <= GameManager.inst.GetDiamondPoint())
+                {
+                    levelDamage += defaultDamage * 10 / 100;
+                    button1.interactable = false;
+                    button2.interactable = true;
+                    GameManager.inst.subtractDiamond(costLevel1);
+                }
+                else
+                {
+                    StartCoroutine(mesaggeAlert());
+                    level = 0;
+                }
+                break;
+            case 2:
+                if (costLevel2 <= GameManager.inst.GetDiamondPoint())
+                {
+                    levelDamage += defaultDamage * 20 / 100;
+                    button2.interactable = false;
+                    button3.interactable = true;
+                    GameManager.inst.subtractDiamond(costLevel2);
+                }
+                else
+                {
+                    StartCoroutine(mesaggeAlert());
+                    level = 1;
+                }
+                break;
+            case 3:
+                if (costLevel3 <= GameManager.inst.GetDiamondPoint())
+                {
+                    levelDamage += defaultDamage * 30 / 100;
+                    button3.interactable = false;
+                    button4.interactable = true;
+                    GameManager.inst.subtractDiamond(costLevel3);
+                }
+                else
+                {
+                    StartCoroutine(mesaggeAlert());
+                    level = 2;
+                }
+                break;
+            case 4:
+                if (costLevel4 <= GameManager.inst.GetDiamondPoint())
+                {
+                    levelDamage += defaultDamage * 40 / 100;
+                    button4.interactable = false;
+                    GameManager.inst.subtractDiamond(costLevel4);
+                }
+                else
+                {
+                    StartCoroutine(mesaggeAlert());
+                    level = 3;
                 }
                 break;
         }

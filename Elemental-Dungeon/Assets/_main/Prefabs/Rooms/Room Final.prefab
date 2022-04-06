@@ -6978,7 +6978,7 @@ MonoBehaviour:
   roomDefault: 0
   bossRoom: 0
   enemysRoom: 0
-  enemyBossPrefab: {fileID: 0}
+  enemyBossPrefabs: []
   enemysPrefabs: []
   spawners: []
   spawnersWall: []

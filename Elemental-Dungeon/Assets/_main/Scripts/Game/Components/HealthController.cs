@@ -11,7 +11,11 @@ public class HealthController : MonoBehaviour
     public Action<float> OnChangeHealth;
     public Action OnDeath;
 
-    private bool isAlive = true;
+    private void Awake()
+    {
+        currentHealth = maxHealth;
+    }
+
     public void SetHealth(float health)
     {
         if (health > maxHealth)
@@ -29,9 +33,8 @@ public class HealthController : MonoBehaviour
         currentHealth -= damage;
 
         OnChangeHealth?.Invoke(currentHealth);
-        if (currentHealth <= 0 && isAlive)
+        if (currentHealth <= 0)
         {
-            isAlive = false;
             OnDeath?.Invoke();
         }
     }
@@ -55,10 +58,5 @@ public class HealthController : MonoBehaviour
     public void SetDefaultHealth()
     {
         currentHealth = maxHealth;
-    }
-
-    public bool IsAlive()
-    {
-        return currentHealth > 0;
     }
 }

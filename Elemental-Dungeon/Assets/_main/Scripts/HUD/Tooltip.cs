@@ -15,7 +15,7 @@ public class Tooltip : MonoBehaviour
     private RectTransform _rectTransform;
     private int _characterLimit = 40;
 
-    private void Awake()
+    private void Start()
     {
         _rectTransform = GetComponent<RectTransform>();
     }

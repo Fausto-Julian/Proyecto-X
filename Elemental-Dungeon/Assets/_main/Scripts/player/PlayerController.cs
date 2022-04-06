@@ -9,15 +9,9 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float speed;
-    [SerializeField] private float aceleracionMax;
 
     [SerializeField] private Animator anim;
     [SerializeField] private Transform center;
-    [SerializeField] private Transform spawnPointAtack1;
-    [SerializeField] private GameObject bulletFire;
-    [SerializeField] private GameObject bulletWater;
-    [SerializeField] private GameObject bulletRock;
-    [SerializeField] private GameObject bulletWind;
     [SerializeField] private GameObject melee;
 
     [SerializeField] private AudioClip espada;
@@ -37,12 +31,10 @@ public class PlayerController : MonoBehaviour
         _body = GetComponent<Rigidbody2D>();
         _audioSouce = GetComponent<AudioSource>();
         _healthController = GetComponent<HealthController>();
-
-        _healthController.OnDeath += IsDeathHandler;
     }
     private void Start()
     {
-        var gameState = GameManager.inst.CheckGameState();
+        var gameState = SaveLoadSystemData.LoadData<GameState>("Game", "GameState");
 
         switch (gameState)
         {
@@ -51,7 +43,10 @@ public class PlayerController : MonoBehaviour
                 GameManager.inst.SetPlayerCurrentLife(_healthController.GetCurrentHealth());
                 break;
             case GameState.game:
-                _healthController.SetHealth(GameManager.inst.LoadPlayerCurrentLife());
+                // solucionar
+                //var playerData = SaveLoadSystemData.LoadData<PlayerData>("Player", "PlayerData");
+                //_healthController.SetHealth(playerData.currenHealthPlayer);
+                _healthController.SetDefaultHealth();
                 break;
             default:
                 break;
@@ -75,7 +70,6 @@ public class PlayerController : MonoBehaviour
             //var desiredSpeed = _movement * speed;
             //var difVel = desiredSpeed - _body.velocity;
 
-
             var force = _movement * speed;
 
             _body.velocity = force;
@@ -97,7 +91,7 @@ public class PlayerController : MonoBehaviour
         _movementY = Input.GetAxisRaw("Vertical");
         _movement = new Vector2(_movementX, _movementY);
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.J))
         {
             melee.SetActive(true);
             anim.SetBool("DownSlash", true);
@@ -105,13 +99,6 @@ public class PlayerController : MonoBehaviour
             _audioSouce.Play();
             Invoke("falseMele", 0.5f);
             Invoke("falseDownSlash", 0.5f);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Mouse1))
-        {
-            Instantiate(bulletFire, spawnPointAtack1.position, spawnPointAtack1.rotation);
-            anim.SetBool("DownCast", true);
-            Invoke("falseDownCast", 0.5f);
         }
 
         if (Input.GetKeyDown(KeyCode.Tab))
@@ -169,20 +156,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void IsDeathHandler()
-    {
-       _healthController.OnDeath -= IsDeathHandler;
-        Destroy(gameObject);
-        Debug.Log("Moriste");
-    }
-
     private void falseDownSlash()
     {
         anim.SetBool("DownSlash", false);
-    }
-    private void falseDownCast()
-    {
-        anim.SetBool("DownCast", false);
     }
     private void falseMele()
     {

@@ -17,6 +17,7 @@ public class EnemyFuegoControlller : MonoBehaviour
     [Header("Instaciar")]
     [SerializeField] private GameObject diamond;
 
+    
     private Rigidbody2D _body;
     private Animator _anim;
     private HealthController _healthController;
@@ -27,7 +28,6 @@ public class EnemyFuegoControlller : MonoBehaviour
     {
         _body = GetComponent<Rigidbody2D>();
         _healthController = GetComponent<HealthController>();
-        _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         _anim = GetComponentInChildren<Animator>();
     }
 
@@ -35,30 +35,30 @@ public class EnemyFuegoControlller : MonoBehaviour
     {
         _healthController.SetDefaultHealth();
         _healthController.OnDeath += IsDeathHandler;
+        _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     private void IsDeathHandler()
     {
-        _healthController.OnDeath -= IsDeathHandler;
         Instantiate(diamond, transform.position, transform.rotation);
-        var distance = Vector2.Distance(transform.position, _playerTransform.position);
-        if (distance <= radiusExp)
-        {
-            GameObject.FindGameObjectWithTag("Player").GetComponent<HealthController>().SetDamage(damageExp);
-            GameObject.FindGameObjectWithTag("Player").GetComponent<DamageManager>().ActiveSetFire(2f, 3f);
-        }
         Destroy(gameObject);
     }
 
     private void FixedUpdate()
     {
-        Vector2 targetMove = (_playerTransform.position - transform.position).normalized;
-        var distance = Vector2.Distance(transform.position, _playerTransform.position);
+        if (_playerTransform != null) { 
+            Vector2 targetMove = (_playerTransform.position - transform.position).normalized;
+            var distance = Vector2.Distance(transform.position, _playerTransform.position);
 
-        if (distance <= radius)
+            if (distance <= radius)
+            {
+                var intensity = (distance / radius) * speed;
+                _body.velocity = targetMove * Mathf.Clamp(intensity, 2f, speed);
+            }
+        }
+        else
         {
-            var intensity = (distance / radius) * speed;
-            _body.velocity = targetMove * Mathf.Clamp(intensity, 2f, speed);
+            _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         }
     }
 

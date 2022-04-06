@@ -17,6 +17,7 @@ public class BossIce : MonoBehaviour
     private Rigidbody2D _body;
     private bool IsRoutineActive;
     private bool IsMoving;
+    private Animation _anim;
 
     private void Awake()
     {
@@ -26,13 +27,16 @@ public class BossIce : MonoBehaviour
         _healthController.SetDefaultHealth();
         _healthController.OnDeath += IsDeathHandler;
         IsMoving = true;
+        _anim = GetComponent<Animation>();
     }
     
     private void IsDeathHandler()
     {
         _healthController.OnDeath -= IsDeathHandler;
         Instantiate(diamond, transform.position, transform.rotation);
-        
+        Instantiate(diamond, transform.position + transform.up * 1.5f, transform.rotation);
+        Instantiate(diamond, transform.position - transform.up * 1.5f, transform.rotation);
+        Instantiate(diamond, transform.position + transform.right * 1.5f, transform.rotation);
         Destroy(gameObject);
     }
 
@@ -77,8 +81,12 @@ public class BossIce : MonoBehaviour
     {
         IsRoutineActive = true;
         IsMoving = false;
+        _body.velocity = Vector2.zero;
         yield return new WaitForSeconds(2f);
+        _anim.Play("AtaqueAliento");
         Instantiate(bulletPrefab, transform.position, transform.rotation);
+        yield return new WaitForSeconds(1f);
+        _anim.Play("IdleHielo");
         IsMoving = true;
         yield return new WaitForSeconds(timingShoot);
         IsRoutineActive = false;
